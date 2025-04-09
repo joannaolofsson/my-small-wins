@@ -11,15 +11,15 @@ const Futureself = () => {
   const { inputs } = useFuture();
 
   return (
-    <div className="flex w-full justify-center m-8">
-      <div className="flex flex-col items-start gap-8 max-w-2xl w-full">
+    <div className="flex w-full justify-center mt-10">
+      <div className="flex flex-col items-start max-w-2xl w-lg">
         <Button asChild variant="none">
-          <Link href="/" className="font-semibold flex items-center gap-1">
+          <Link href="/" className="font-semibold flex items-center ">
             <PiCaretLeft /> Tillbaka
           </Link>
         </Button>
 
-        <h1 className="text-4xl">Envision your future you in 5, 10, or 15 years</h1>
+        <h1 className="text-4xl my-2">Envision your future you in 5, 10, or 15 years</h1>
 
         <FutureInputSection
           type="Habit"
@@ -34,12 +34,13 @@ const Futureself = () => {
           placeholder="What do you want to give to your future self?"
         />
 
-        <section className="w-full">
+        <section className="w-lg flex flex-col mt-8">
           {inputs.map((input) => (
             <Link key={input.id} href={`/smallwins?id=${input.id}`}>
-              <Card className="cursor-pointer hover:shadow-lg transition">
-                <CardTitle className="px-6 py-4">
-                  {input.type}: {input.value}
+              <Card className="
+              border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4">
+                <CardTitle className="text-lg font-medium px-6 pt-4">
+                  <span className="hidden">{input.type}:</span>{input.value}
                 </CardTitle>
                 <CardContent>
                   <ul>
