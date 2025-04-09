@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from "react";
-import { FutureType, useFuture } from "@/context/FutureContext";
+import { InputType, useFuture } from "@/context/FutureContext";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
 interface InputSectionProps {
-  type: FutureType;
+  type: InputType;
   placeholder: string;
 }
 
