@@ -20,8 +20,8 @@ const SmallWins = () => {
     : inputs;
 
   return (
-    <div className="flex w-full justify-center m-8">
-      <div className="flex flex-col items-start gap-8 max-w-2xl w-full">
+    <div className="grid grid-cols-1 grid-row-4 justify-center mt-10 w-full">
+      <div className="w-lg flex flex-col items-start">
         <Button asChild variant="none">
           <Link href="/" className="font-semibold flex items-center gap-1">
             <PiCaretLeft /> Tillbaka
@@ -30,11 +30,12 @@ const SmallWins = () => {
 
         <h1 className="text-3xl mb-2">Your Small Wins</h1>        
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col mt-8 w-full">
           {filteredInputs.map((input) => (
-            <Card key={input.id} className="mb-4">
-              <CardTitle className="px-4 py-2">
-                {input.type}: {input.value}
+            <Card key={input.id} className="
+            w-full border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4">
+              <CardTitle className="text-lg font-medium px-6 pt-4">
+               <span className="hidden"> {input.type}:</span> {input.value}
               </CardTitle>
               <CardContent>
                 🏆 You did something great!
@@ -45,9 +46,9 @@ const SmallWins = () => {
 
         <SmallWinFormSection />
 
-        <div className="flex flex-col gap-4 mt-6 w-md">
+        <div className="w-lg flex flex-col gap-4 mt-6">
           {wins.map((win) => (
-            <Card key={win.id}>
+            <Card key={win.id} className="border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4">
               <CardTitle className="px-4 py-2">🎯 {win.message}</CardTitle>
               <CardContent>You're awesome!</CardContent>
             </Card>

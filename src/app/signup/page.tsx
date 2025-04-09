@@ -7,10 +7,10 @@ import { PiCaretLeft } from 'react-icons/pi'
 
 function SignupPage() {
   return (
-    <div className="flex w-full justify-center m-8">
-      <div className="flex flex-col items-start gap-8 ">
-      <Button asChild variant="none">
-          <Link href="/" className="font-semibold flex items-center gap-1">
+    <div className="flex w-full justify-center mt-10">
+      <div className="flex flex-col items-start max-w-2xl w-lg">
+        <Button asChild variant="none">
+          <Link href="/" className="font-semibold flex items-center ">
             <PiCaretLeft /> Tillbaka
           </Link>
         </Button>

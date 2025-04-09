@@ -19,23 +19,30 @@ export const SmallWinFormSection = () => {
     reset();
   };
 
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
-        <Label htmlFor="name">Name your win?</Label>
+    <form onSubmit={handleSubmit(onSubmit)} className="bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer mb-4 flex flex-col gap-2 w-full mt-4">
+        <div className='py-4'>
+        <Label htmlFor="name" className='pb-2' >Name your win?</Label>
       <Input
         {...register("message")}
         placeholder="Write a small win..."
         className="flex-1 bg-[#F8F9FA]"
       />
-       <Label htmlFor="name">How do you feel about it?</Label>
+      </div>
+      <div className='my-4'>
+       <Label htmlFor="name" className='pb-2'>How do you feel about it?</Label>
       <Input
         {...register("message")}
         placeholder="How do you feel about it..."
         className="flex-1 bg-[#F8F9FA]"
       />
+      </div>
+      <div className='w-lg flex justify-end'>
       <Button type="submit" variant="default">
         Submit
       </Button>
+      </div>
     </form>
   );
 };
