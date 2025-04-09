@@ -30,9 +30,11 @@ function SignupPage() {
         placeholder="How do you feel about it..."
         className="flex-1 bg-[#F8F9FA]"
       />
-      <Button type="submit" variant="default">
-        Submit
-      </Button>
+        <Button asChild>
+          <Link href="/thankyou" className="font-semibold flex items-center gap-1">
+            Sign up
+          </Link>
+        </Button>
     </form>
     </div>
     </div>

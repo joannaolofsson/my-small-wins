@@ -30,9 +30,11 @@ function SignupPage() {
         placeholder="How do you feel about it..."
         className="flex-1 bg-[#F8F9FA]"
       />
-      <Button type="submit" variant="default">
-        Submit
-      </Button>
+      <Button asChild >
+          <Link href="/futureself" className="font-semibold flex items-center gap-1">
+            Login
+          </Link>
+        </Button>
     </form>
     </div>
     </div>
