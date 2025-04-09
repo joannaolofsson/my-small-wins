@@ -1,42 +1,61 @@
-import { Card, CardTitle, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import React from 'react'
-import { Badge } from '@/components/ui/badge'
+'use client';
 
-function Smallwins() {
+import { useFuture } from "@/context/FutureContext";
+import { useWin } from "@/context/WinContext"; // ✅ Must be imported!
+import { Card, CardTitle, CardContent } from "@/components/ui/card";
+import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { PiCaretLeft } from "react-icons/pi";
+import { SmallWinFormSection } from "@/components/SmallWinFormSection";
+
+const SmallWins = () => {
+  const { wins } = useWin(); // ✅ Now this works
+  const { inputs } = useFuture();
+  const searchParams = useSearchParams();
+  const selectedId = searchParams.get("id");
+
+  const filteredInputs = selectedId
+    ? inputs.filter((input) => input.id === selectedId)
+    : inputs;
+
   return (
     <div className="flex w-full justify-center m-8">
-      <div className="flex flex-col items-start gap-8 ">
+      <div className="flex flex-col items-start gap-8 max-w-2xl w-full">
+        <Button asChild variant="none">
+          <Link href="/" className="font-semibold flex items-center gap-1">
+            <PiCaretLeft /> Tillbaka
+          </Link>
+        </Button>
 
-      <Card className='flex flex-col text-lg'>
-        <CardTitle className='px-6 py-4'>Future self 1</CardTitle>
-        <CardContent>
-          <ul>
-            <li>Great job</li>
-          </ul>
-        </CardContent>
-      </Card> {/*Samma kort man tryckt på tidigare */}
+        <h1 className="text-3xl mb-2">Your Small Wins</h1>        
 
-      <section className='flex flex-col gap-2 bg-blue-50 px-6 py-4'>
-        <h2 className='text-lg'>My win:</h2>
-        <Input></Input>
-        <Button>Add</Button>
-      </section>
-      <section className='flex flex-col gap-2 bg-blue-50 px-6 py-4'>
-        <ul>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-        </ul>
-      </section>
-      <section>
-        <Badge>Win</Badge>
-      </section>
+        <div className="flex flex-col gap-4">
+          {filteredInputs.map((input) => (
+            <Card key={input.id} className="mb-4">
+              <CardTitle className="px-4 py-2">
+                {input.type}: {input.value}
+              </CardTitle>
+              <CardContent>
+                🏆 You did something great!
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <SmallWinFormSection />
+
+        <div className="flex flex-col gap-4 mt-6 w-md">
+          {wins.map((win) => (
+            <Card key={win.id}>
+              <CardTitle className="px-4 py-2">🎯 {win.message}</CardTitle>
+              <CardContent>You're awesome!</CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Smallwins
+export default SmallWins;

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import Tabbar from "@/components/tabbar";
-import { NavigationMenu } from "@/components/ui/navigation-menu";
+import Tabbar from "@/components/Tabbar";
+import Header from "@/components/Header";
+import { FutureProvider } from "@/context/FutureContext";
+import { WinProvider } from "@/context/WinContext";
+
 
 const manropeSans = Manrope({
   weight: ['400', '500', '600', '700'],
@@ -24,13 +27,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${manropeSans} antialiased`}
+        className={`${manropeSans} antialiased bg-gradient-to-br from-[#A8D5BA] to-[#D9F1E5] min-h-screen`}
       >
-        <NavigationMenu className="" />
+        <Header />
         <div className="bottom-0 fixed">
         <Tabbar/>
         </div>
+        <WinProvider>
+        <FutureProvider>
         {children}
+        </FutureProvider>
+        </WinProvider>
+
       </body>
     </html>
   );
