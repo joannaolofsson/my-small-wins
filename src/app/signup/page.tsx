@@ -14,27 +14,29 @@ function SignupPage() {
             <PiCaretLeft /> Tillbaka
           </Link>
         </Button>
-    <form className="flex flex-col gap-4 w-full">
-        <Label htmlFor="name">Name your win?</Label>
+    <form className="flex flex-col gap-4 w-full h-auto border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 p-6">
+        <Label htmlFor="name">Name</Label>
       <Input
-        placeholder="Write a small win..."
+        placeholder="Name"
         className="flex-1 bg-[#F8F9FA]"
       />
-       <Label htmlFor="name">How do you feel about it?</Label>
+       <Label htmlFor="email">Username:</Label>
       <Input
-        placeholder="How do you feel about it..."
+        placeholder="Email"
         className="flex-1 bg-[#F8F9FA]"
       />
-      <Label htmlFor="name">How do you feel about it?</Label>
+      <Label htmlFor="password">Password</Label>
       <Input
-        placeholder="How do you feel about it..."
+        placeholder="Password"
         className="flex-1 bg-[#F8F9FA]"
       />
+        <div className='w-lg flex justify-end pr-12'>
         <Button asChild>
           <Link href="/thankyou" className="font-semibold flex items-center gap-1">
             Sign up
           </Link>
         </Button>
+        </div>
     </form>
     </div>
     </div>
