@@ -12,7 +12,7 @@ function Home() {
         <p className="text-lg">What habits does your future self have?</p>
         <p className="text-lg">Track your small wins today and meet a future you want to live in.</p>
         <div className="flex gap-2">
-      
+
           <Button asChild variant="secondary">
             <Link href="/smallwins">Track wins</Link>
           </Button>

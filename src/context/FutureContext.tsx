@@ -11,9 +11,9 @@ export interface FutureInput {
 }
 
 interface FutureProviderProps {
-    inputs: FutureInput[];
-    addInput: (type: InputType, value: string) => void;
-  }
+  inputs: FutureInput[];
+  addInput: (type: InputType, value: string) => void;
+}
 
 const FutureContext = createContext<FutureProviderProps | undefined>(undefined);
 

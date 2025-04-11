@@ -24,87 +24,40 @@ const SmallWins = () => {
       <div className="">
         <Button asChild variant="none">
           <Link href="/"><PiCaretLeft />
-          Tillbaka
+            Tillbaka
           </Link>
         </Button>
-        </div>
+      </div>
       <div className="text-2xl mb-4"><h2>Small wins</h2></div>
-      
+
       <div className="relative flex flex-col items-center">
-      {filteredInputs.map((input) => (
-            <Card key={input.id} 
-             className="w-full h-auto border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 p-4">
-              <CardTitle className="text-lg font-medium px-6 pt-4">
-               <span className="hidden"> {input.type}:</span> {input.value}
-              </CardTitle>
-              <CardContent>
-                🏆 You did something great!
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {filteredInputs.map((input) => (
+          <Card key={input.id}
+            className="w-full h-auto border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 p-4">
+            <CardTitle className="text-lg font-medium px-6 pt-4">
+              <span className="hidden"> {input.type}:</span> {input.value}
+            </CardTitle>
+            <CardContent>
+              🏆 You did something great!
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
 
       <div >
         <SmallWinFormSection />
       </div>
       <div className="">
-      {wins.map((win) => (
-            <Card key={win.id} className="border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4">
-              <CardTitle className="px-4 py-2">🎯 {win.message}</CardTitle>
-              <CardContent>You're awesome!</CardContent>
-            </Card>
-          ))}
+        {wins.map((win) => (
+          <Card key={win.id} className="border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4">
+            <CardTitle className="px-4 py-2">🎯 {win.message}</CardTitle>
+            <CardContent>You're awesome!</CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   )
-
-    {/* <>
-   
-      <div className="grid grid-cols-1 grid-rows-4 mb-0 mx-auto w-lg mt-10">
-        <div className="row-start-1 h-12 my-0 bg-blue-400">
-          <Button asChild variant="none">
-            <Link href="/" className="flex">
-              <PiCaretLeft /> Tillbaka
-            </Link>
-          </Button>
-        </div>
-
-        <div className="row-start-2 h-12 bg-amber-500">
-          <h1 className="text-lg m-0">Your Small Wins</h1>     
-        </div>   
-
-        <div className="row-start-3">
-          {filteredInputs.map((input) => (
-            <Card key={input.id} className="
-            w-full border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4 p-6">
-              <CardTitle className="text-lg font-medium px-6 pt-4">
-               <span className="hidden"> {input.type}:</span> {input.value}
-              </CardTitle>
-              <CardContent>
-                🏆 You did something great!
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="row-start-4">
-          <SmallWinFormSection />
-        </div>
-
-        <div className="row-start-5">
-          {wins.map((win) => (
-            <Card key={win.id} className="border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4">
-              <CardTitle className="px-4 py-2">🎯 {win.message}</CardTitle>
-              <CardContent>You're awesome!</CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      </>
-*/}
-  //);
 };
 
 
