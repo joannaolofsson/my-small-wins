@@ -1,18 +1,18 @@
-import supabase from "@/utils/supabase";
+import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 
 export const revalidate = 0;
 
 export default async function Future({
-    params: { id }, 
+    params: { id },
 }: {
-    params: {id: string}; 
+    params: { id: string };
 }) {
-    const {data: future} = await supabase
-    .from("futures")
-    .select()
-    .match({ id })
-    .single();
+    const { data: future } = await supabase
+        .from("future_input")
+        .select()
+        .match({ id })
+        .single();
 
     if (!future) {
         notFound();
