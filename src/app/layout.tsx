@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
-import '../styles/global.css';
+import './globals.css'
 import Tabbar from "@/components/tabbar";
 import Header from "@/components/Header";
 import { FutureProvider } from "@/context/FutureContext";
