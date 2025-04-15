@@ -5,11 +5,13 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 export interface WinInput {
   id: string;
   message: string;
+  icon: string;
+  encouragement: string;
 }
 
 interface WinProviderProps {
   wins: WinInput[];
-  addWin: (message: string) => void;
+  addWin: (input: Omit<WinInput, 'id'>) => void;
 }
 
 const WinContext = createContext<WinProviderProps | undefined>(undefined);
@@ -17,10 +19,10 @@ const WinContext = createContext<WinProviderProps | undefined>(undefined);
 export const WinProvider = ({ children }: { children: React.ReactNode }) => {
   const [wins, setWins] = useState<WinInput[]>([]);
 
-  const addWin = useCallback((message: string) => {
+  const addWin = useCallback((input: Omit<WinInput, 'id'>) => {
     const newWin: WinInput = {
       id: Date.now().toString(),
-      message,
+      ...input, // message, icon, encouragement
     };
     setWins((prev) => [...prev, newWin]);
   }, []);
