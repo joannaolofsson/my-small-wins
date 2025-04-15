@@ -1,5 +1,5 @@
 "use server";
-import { createClient } from "@/utils/server";
+import createClient from "@/utils/server";
 import { revalidatePath } from "next/cache";
 
 export async function addInput(formData: FormData) {
