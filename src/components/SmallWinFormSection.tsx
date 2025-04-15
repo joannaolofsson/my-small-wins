@@ -1,4 +1,4 @@
-'use client';
+
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useWin } from '@/context/WinContext';
