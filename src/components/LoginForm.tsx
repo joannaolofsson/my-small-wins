@@ -18,7 +18,7 @@ const LoginForm = () => {
         const result = await login(formData)
         
         if(result.status == "success" && result.user) {
-          router.push(`/dashboard)/${result.user.id}`);
+          router.push(`/dashboard/${result.user.id}`);
         } else {
           setError(result.status);
         }
