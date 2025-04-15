@@ -5,8 +5,6 @@ import Tabbar from "@/components/Tabbar";
 import Header from "@/components/Header";
 import { FutureProvider } from "@/context/FutureContext";
 import { WinProvider } from "@/context/WinContext";
-import { AuthProvider } from "@/context/AuthContext";
-
 
 const manropeSans = Manrope({
   weight: ['400', '500', '600', '700'],
@@ -31,7 +29,7 @@ export default function RootLayout({
         className={`${manropeSans} antialiased bg-gradient-to-br from-[#A8D5BA] to-[#D9F1E5] min-h-screen`}
       >
         
-        <AuthProvider>
+   
           <WinProvider>
             <FutureProvider>
               <Header />
@@ -43,7 +41,7 @@ export default function RootLayout({
               </div>
             </FutureProvider>
           </WinProvider>
-        </AuthProvider>
+  
       </body>
     </html>
   );
