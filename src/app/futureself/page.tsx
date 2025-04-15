@@ -1,18 +1,21 @@
-// app/futureself/page.tsx
 'use server';
 
 import createClient from '@/utils/server';
 import FutureselfClient from './futureselfclient';
 import { redirect } from 'next/navigation';
 
+interface User {
+  id: string;
+  user_metadata?: { username: string };
+}
+
 export default async function FutureselfPage() {
   const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
+    console.log('User is not authenticated. Redirecting to login...');
     return redirect('/login');
   }
 
@@ -23,7 +26,7 @@ export default async function FutureselfPage() {
 
   if (error) {
     console.error('Error fetching inputs:', error.message);
-    return <div>Failed to load data. Please try again later.</div>;
+    return redirect('/error');
   }
 
   return (
@@ -31,6 +34,6 @@ export default async function FutureselfPage() {
       username={user.user_metadata?.username ?? 'Friend'}
       userId={user.id}
       initialInputs={inputs ?? []}
-    />
+/>
   );
 }
