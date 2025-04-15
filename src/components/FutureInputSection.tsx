@@ -1,22 +1,17 @@
 'use client';
 
 import { useState } from "react";
-import { InputType, useFuture } from "@/context/FutureContext";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { FutureSectionProps } from "@/types/interfaces";
 
-interface InputSectionProps {
-  type: InputType;
-  placeholder: string;
-}
 
-export const FutureInputSection = ({ type, placeholder }: InputSectionProps) => {
-  const { addInput } = useFuture();
+export const FutureInputSection = ({ type, placeholder, onAdd }: FutureSectionProps) => {
   const [value, setValue] = useState("");
 
   const handleAdd = () => {
     if (!value.trim()) return;
-    addInput(type, value.trim());
+    onAdd(type, value.trim());
     setValue("");
   };
 
