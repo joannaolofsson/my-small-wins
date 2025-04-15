@@ -1,4 +1,4 @@
-import { supabase } from "@/app/utils/supabase/clients";
+import { createSupabaseClient } from "@/utils/clients";
 import { notFound } from "next/navigation";
 
 export const revalidate = 0;
@@ -8,7 +8,7 @@ export default async function Future({
 }: {
     params: { id: string };
 }) {
-    const { data: future } = await supabase
+    const { data: future } = await createSupabaseClient
         .from("future_input")
         .select()
         .match({ id })

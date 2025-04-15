@@ -8,6 +8,7 @@ const LoginForm = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -16,8 +17,8 @@ const LoginForm = () => {
      const formData = new FormData(event.currentTarget);
         const result = await login(formData)
         
-        if(result.status == "success") {
-          router.push("/");
+        if(result.status == "success" && result.user) {
+          router.push(`/dashboard)/${result.user.id}`);
         } else {
           setError(result.status);
         }
