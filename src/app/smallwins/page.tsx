@@ -29,12 +29,12 @@ const SmallWins = () => {
       const alreadyAdded = wins.some((win) => win.id === input.id);
       if (alreadyAdded) return;
 
-      const res = await fetch(`/api/small-win?type=${input.type}`);
+      const res = await fetch(`/api/small-win?type=${input.category}`);
       const data = await res.json();
 
       addWin({
         id: input.id,
-        message: input.value,
+        message: input.name,
         icon: data.icon,
         encouragement: data.encouragement,
       });
@@ -59,7 +59,7 @@ const SmallWins = () => {
           <Card key={input.id}
             className="w-full h-auto border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 p-4">
             <CardTitle className="text-lg font-medium px-6 pt-4">
-              <span className="hidden">{input.type}:</span> {input.value}
+              <span className="hidden">{input.category}:</span> {input.name}
             </CardTitle>
             <CardContent>🏆 You did something great!</CardContent>
           </Card>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import './globals.css'
-import Tabbar from "@/components/tabbar";
+import Tabbar from "@/components/Tabbar";
 import Header from "@/components/Header";
 import { FutureProvider } from "@/context/FutureContext";
 import { WinProvider } from "@/context/WinContext";
@@ -29,19 +29,18 @@ export default function RootLayout({
       <body
         className={`${manropeSans} antialiased bg-gradient-to-br from-[#A8D5BA] to-[#D9F1E5] min-h-screen`}
       >
-        
-   
-          <WinProvider>
+          
+              <main className="pb-20">
+              <WinProvider>
             <FutureProvider>
               <Header />
-              <main className="pb-20">
                 {children}
-              </main>
               <div className="bottom-0 fixed">
                 <Tabbar/>
               </div>
             </FutureProvider>
-          </WinProvider>
+          </WinProvider>d 
+          </main>
   
       </body>
     </html>

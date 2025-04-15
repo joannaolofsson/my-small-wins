@@ -9,13 +9,13 @@ export default async function Home() {
     data: {user},
   } = await supabase.auth.getUser();
   return (
-    <main className="flex flex-col items-center justify-between">
-       <div className="flex flex-col items-start gap-4">
+    <div className="flex flex-col items-center justify-center h-screen">
+       <div className="flex flex-col items-start gap-6">
         <ClientComponent />
         <h1 className="text-6xl">Track your small wins</h1>
 
-        <p className="text-lg">What habits does your future self have?</p>
-        <p className="text-lg">Track your small wins today and meet a future you want to live in.</p>
+        <p className="text-2xl">What habits does your future self have?</p>
+        <p className="text-2xl">Track your small wins today and meet a future you want to live in.</p>
         <div className="flex gap-2">
           {!user ? (
               <Link href="/login">
@@ -32,6 +32,6 @@ export default async function Home() {
             </>)}
         </div>
       </div>
-      </main>
+      </div>
   )
 }
