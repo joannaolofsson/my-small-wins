@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import Tabbar from "@/components/Tabbar";
+
 import Header from "@/components/Header";
 import { FutureProvider } from "@/context/FutureContext";
 import { WinProvider } from "@/context/WinContext";
@@ -39,7 +39,7 @@ export default function RootLayout({
                 {children}
               </main>
               <div className="bottom-0 fixed">
-                <Tabbar/>
+
               </div>
             </FutureProvider>
           </WinProvider>
