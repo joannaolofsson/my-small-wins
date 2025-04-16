@@ -22,6 +22,7 @@ const LoginForm = () => {
         } else {
           setError(result.status);
         }
+        console.log("Login result:", result);
 
     setLoading(false);
   };

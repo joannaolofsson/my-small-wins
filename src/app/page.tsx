@@ -1,10 +1,11 @@
+'use server'
 import Link from "next/link"
 import createClient from "@/utils/server";
 import Logout from "@/components/Logout";
 import ClientComponent from "@/components/ClientComponent";
 
 export default async function Home() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: {user},
   } = await supabase.auth.getUser();

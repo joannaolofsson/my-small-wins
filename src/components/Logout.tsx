@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { signOut } from "../../actions/auth";
 
-
 const Logout = () => {
   const [loading, setLoading] = useState(false);
 
