@@ -6,7 +6,7 @@ import createClient from "@/utils/server";
 
 
 export async function signUp(formData: FormData) {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const creadentials = {
         username: formData.get("username") as string,  
@@ -40,7 +40,7 @@ export async function signUp(formData: FormData) {
     }
 
 export async function login(formData: FormData) {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const credentials = {
         email: formData.get("email") as string,
@@ -48,6 +48,7 @@ export async function login(formData: FormData) {
     };
 
     const { error, data} = await supabase.auth.signInWithPassword(credentials);
+console.log("Logged in user:", data?.user); // Log user data here
 
     if(error) {
         return {
@@ -83,7 +84,7 @@ export async function login(formData: FormData) {
 }
 
 export async function signOut() {
-    const supabase = createClient();
+    const supabase = await createClient();
     const {error} = await supabase.auth.signOut();
 
     if(error) {

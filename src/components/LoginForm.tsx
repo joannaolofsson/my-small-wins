@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import AuthButton from "./AuthButton";
 import { useRouter } from "next/navigation";
 import { login } from "../../actions/auth";
+import { createSupabaseClient } from "@/utils/clients";
 
 const LoginForm = () => {
   const [error, setError] = useState<string | null>(null);
@@ -18,13 +19,17 @@ const LoginForm = () => {
         const result = await login(formData)
         
         if(result.status == "success" && result.user) {
-          router.push(`/dashboard/${result.user.id}`);
+          router.push("/");
         } else {
           setError(result.status);
         }
         console.log("Login result:", result);
 
     setLoading(false);
+
+
+
+    
   };
   return (
     <div>

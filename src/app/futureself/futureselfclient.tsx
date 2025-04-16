@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { PiCaretLeft } from 'react-icons/pi';
 import { FutureInputSection } from '@/components/FutureInputSection';
@@ -12,44 +12,43 @@ export default function FutureselfClient({ username, userId, initialInputs }: In
   const { inputs, addInput } = useFuture();
 
   return (
-    <div className="flex w-full justify-center h-screen">
-      <div className="flex flex-col items-start w-lg">
+    <div className="flex w-full justify-center h-screen mt-10">
+      <div className="flex flex-col items-start">
         <Button asChild variant="none">
           <Link href="/" className="font-semibold flex items-center">
             <PiCaretLeft /> Tillbaka
           </Link>
         </Button>
 
+        {/*Here are my inputs*/}
+        <div className='w-lg bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-4 flex flex-col gap-2 p-6'>
+          <h1 className='text-2xl'>Describe your future self</h1>
+          <p>Your future self is an updated version of you</p>
+          <p>And by defining things about your future you, you can take action an start tracking your future self</p>
 
-        {['Habit', 'Accomplishment', 'Gift'].map((type) => (
+          {['Habit', 'Accomplishment', 'Gift'].map((type) => (
 
-          <FutureInputSection
-            key={type}
-            type={type as InputType}
-            placeholder={`Add a ${type.toLocaleLowerCase()} ...`}
-            onAdd={addInput}
-          />
-        ))}
-
-        <section className="w-lg flex flex-col mt-8">
-
+            <FutureInputSection
+              key={type}
+              type={type as InputType}
+              placeholder={`Add a ${type.toLocaleLowerCase()} ...`}
+              onAdd={addInput}
+            />
+          ))}
+        </div>
+        
+        <section className="w-lg flex flex-col mt-8 ">
           <div>
             {inputs.map((input) => (
-              <Link key={`${input.id}-${input.category}`} href={`/smallwins?id=${input.id}`}>
-                <Card
-                  className="border border-white/20 rounded-xl backdrop-blur-[15px] bg-white/30 shadow-lg cursor-pointer mb-4"
-                >
-                  <CardTitle className="text-lg font-medium px-6 pt-4">
-                    {input.category}: {input.category}
-                  </CardTitle>
-                  <CardContent>
-                    🏆 Click to see more details about this win!
-                  </CardContent>
-                </Card>
-              </Link>
+              <Link href={`/small-wins/${input.id}`} key={`${input.id}-${input.name}`}>
+              <Card>
+                <CardTitle>{input.name}</CardTitle>
+              </Card>
+            </Link>
             ))}
           </div>
         </section>
+
       </div>
     </div>
   )
