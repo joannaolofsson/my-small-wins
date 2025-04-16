@@ -1,41 +1,50 @@
-'use client'
-import React from 'react'
-import { Button } from './ui/button';
-import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
-import { useRouter } from "next/navigation"
+import createClient from "@/utils/server";
+import Link from "next/link";
+import React from "react";
+import Logout from "./Logout";
 
-function Header() {
-  const router = useRouter()
+const Header = async () => {
+  const supabase = createClient();
+  const {
+    data: {user},
+  } = await supabase.auth.getUser();
 
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    console.log(error)
-    router.refresh()
-  }
   return (
-    <div className="flex flex-row gap-4 justify-evenly bg-[#F8F9FA] w-full px-8 py-4">
-      <div className='flex flex-row justify-between bg-[#F8F9FA] w-full'>
-        <div className='flex flex-row justify-between gap-4'>
-          <Link href="/">Small win tracker</Link>
-          <Link href="/futureself">Future Self</Link>
-          <Link href="/smallwins">Small Wins</Link>
-        </div>
+    <nav className="flex-nowrap relative flex w-full items-center bg-white/30 p-6 rounded-xl border border-white/20 backdrop-blur-md">
+      <div className="flex w-full items-center justify-evenly">
+        <Link className="font-semibold" href="/">
+          Home
+        </Link>
 
-        <div className='flex flex-row gap-2 '>
-          <Button asChild>
-            <Link href="/signup" className="hidden sm:block">
-              Sign Up
+        <div className="flex items-center gap-x-5">
+          <Link href="/futureself" className="font-semibold">Future Self</Link>
+        </div>
+        <div className="flex items-center gap-x-5">
+          <Link href="/smallwins" className="font-semibold">Small Wins</Link>
+        </div>
+        <div className="flex items-center gap-x-5">
+ 
+          {!user ? (
+              <Link href="/login">
+              <div className="bg-[#C9A7D9] text-white text-sm font-semibold px-4 py-2 rounded-sm">
+                Login
+              </div>
             </Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button onClick={() => handleSignOut()}>Log out</Button>
+          ) : (
+            <>
+            <div className="flex items-center gap-x-2 text-sm">
+              {user?.email}
+            </div>
+            <Logout />
+            </>)}
+            <div>
+            <Link href="/signup" className="bg-[#5AA9A3] text-white text-sm font-semibold px-4 py-2 rounded-sm">Sign Up</Link>
+          </div>
+          
         </div>
       </div>
-    </div>
-  )
-}
+    </nav>
+  );
+};
 
-export default Header
+export default Header;
