@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from '@/types/supabase'; // Import your schema
+import { Database } from '@/types/supabase';
 
 export function createSupabaseClient() {
   return createClient<Database>(

@@ -1,3 +1,4 @@
+'use server'
 import Link from "next/link"
 import createClient from "@/utils/server";
 import Logout from "@/components/Logout";

@@ -1,4 +1,5 @@
-import { createSupabaseClient } from "../../../utils/clients";
+
+import { createSupabaseClient } from "@/utils/clients";
 import ClientComponent from "@/components/ClientComponent";
 import { notFound } from "next/navigation";
 
