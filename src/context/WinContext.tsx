@@ -1,9 +1,10 @@
 'use client';
-
 import React, { createContext, useContext, useState, useCallback } from 'react';
 
 export interface WinInput {
-  id: string;
+  id: string; 
+  inputId: string; 
+  uniqueKey: string;
   message: string;
   icon: string;
   encouragement: string;
@@ -21,8 +22,8 @@ export const WinProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addWin = useCallback((input: Omit<WinInput, 'id'>) => {
     const newWin: WinInput = {
-      id: Date.now().toString(),
-      ...input, // message, icon, encouragement
+      id: Date.now().toString(), 
+      ...input, 
     };
     setWins((prev) => [...prev, newWin]);
   }, []);

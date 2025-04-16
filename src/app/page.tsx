@@ -9,6 +9,10 @@ export default async function Home() {
   const {
     data: {user},
   } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase.auth.getUser();
+console.log("User Data:", data); // Should contain user details like `id` and `email`
+console.log("Error:", error); // Should show any errors returned by Supabase
   return (
     <div className="flex flex-col items-center justify-center h-screen">
        <div className="flex flex-col items-start gap-6">

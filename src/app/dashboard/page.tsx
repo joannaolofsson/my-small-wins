@@ -4,7 +4,7 @@ import Logout from "@/components/Logout";
 import ClientComponent from "@/components/ClientComponent";
 
 export default async function Dashboard() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
