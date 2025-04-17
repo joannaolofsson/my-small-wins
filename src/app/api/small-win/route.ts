@@ -85,6 +85,11 @@ export async function GET(request: NextRequest) {
     ? messages[Math.floor(Math.random() * messages.length)]
     : "Keep going!";
 
+    const result: messages
+
+    const result: number = arr[ind];
+    console.log(`Random Element = ${result}`);
+
     console.log("messages:", messagesByType[type]);
 
   return NextResponse.json({
