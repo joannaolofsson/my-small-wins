@@ -20,7 +20,7 @@ export default function FutureselfClient({ username, userId, initialInputs }: In
           </Link>
         </Button>
 
-        {/*Here are my inputs*/}
+    
         <div className='w-lg bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-4 flex flex-col gap-2 p-6'>
           <h1 className='text-2xl'>Describe your future self</h1>
           <p>Your future self is an updated version of you</p>
@@ -40,7 +40,7 @@ export default function FutureselfClient({ username, userId, initialInputs }: In
         <section className="w-lg flex flex-col mt-8 ">
           <div>
             {inputs.map((input) => (
-              <Link href={`/small-wins/${input.id}`} key={`${input.id}-${input.name}`}>
+              <Link href="/smallwins">
               <Card>
                 <CardTitle>{input.name}</CardTitle>
               </Card>

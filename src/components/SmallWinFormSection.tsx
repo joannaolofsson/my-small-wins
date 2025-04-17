@@ -3,26 +3,22 @@ import { useWin } from "@/context/WinContext";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
-import { createSupabaseClient } from "@/utils/clients";
+import { supabase } from "@/lib/supabase-client";
 
 type WinFormValues = {
   message: string;
-  encouragement: string; // No message field anymore
-
-};type SmallWinFormSectionProps = {
-  selectedId: string | null;
+  encouragement: string; 
+  emotion:string;
 };
 
-export const SmallWinFormSection = ({ selectedId }: SmallWinFormSectionProps) => {
+export const SmallWinFormSection = ({ selectedId }: { selectedId: string | null }) => {
   const { addWin } = useWin();
   const { register, handleSubmit, reset } = useForm<WinFormValues>();
-  const supabase = createSupabaseClient();
 
   const onSubmit: SubmitHandler<WinFormValues> = async (data) => {
     const uniqueId = crypto.randomUUID();
 
     try {
-      // Retrieve the authenticated user's session
       const { data: session, error: sessionError } = await supabase.auth.getSession();
       if (sessionError || !session?.session?.user?.id) {
         console.error("User is not authenticated:", sessionError?.message || "No session found");
@@ -31,27 +27,27 @@ export const SmallWinFormSection = ({ selectedId }: SmallWinFormSectionProps) =>
 
       const userId = session.session.user.id;
 
-      // Fetch encouragement and icon from the API
       const res = await fetch(`/api/small-win?type=manual`);
       const apiData = await res.json();
 
-      // Add win to context/state
+      // Ny win
       addWin({
         inputId: uniqueId,
         uniqueKey: uniqueId,
         message: data.message,
-        icon: apiData.icon || "✨",
-        encouragement: apiData.encouragement || data.encouragement,
+        icon: apiData.icon,
+        encouragement: data.encouragement, 
       });
+      
 
-      // Save win to Supabase
+      // Detta sparas i supabase
       const { error: insertError } = await supabase.from("win_messages").insert({
         input_id: uniqueId,
         user_id: userId,
         winmessage: data.message,
         icon: apiData.icon || "✨",
-        encouragement: apiData.encouragement || data.encouragement,
-        category: "manual",
+        encouragement: data.encouragement, 
+        category: null, 
         created_at: new Date().toISOString(),
       });
 
@@ -85,12 +81,12 @@ export const SmallWinFormSection = ({ selectedId }: SmallWinFormSectionProps) =>
       </div>
 
       <div className="my-4">
-        <Label htmlFor="encouragement" className="pb-2">
+        <Label htmlFor="emotion" className="pb-2">
           How do you feel about it?
         </Label>
         <Input
-          id="encouragement"
-          {...register("encouragement", { required: false })}
+          id="emotion" 
+          {...register("emotion", { required: false })}
           placeholder="Write your feelings..."
           className="flex-1 bg-[#F8F9FA]"
         />
