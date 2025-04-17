@@ -32,8 +32,7 @@ export default function RootLayout({
             <FutureProvider>
               <Header />
               {children}
-
-            </FutureProvider>
+              </FutureProvider>
           </WinProvider>
         </main>
       </body>
