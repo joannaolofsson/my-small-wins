@@ -33,4 +33,4 @@ export const messagesByType: DataByType = {
     "Your words, your power.",
     "Custom win? That's next-level mindful ✨",
   ],
-};
+
