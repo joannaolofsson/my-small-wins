@@ -1,3 +1,4 @@
+
 import { iconsByType, messagesByType, ValidType } from "./smallData";
 
 let idCounter = 0;
@@ -19,3 +20,4 @@ export function generateRandomSmallWin(type: ValidType) {
 
   };
 }
+

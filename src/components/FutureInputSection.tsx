@@ -16,7 +16,7 @@ export const FutureInputSection = ({ type, placeholder, onAdd }: FutureSectionPr
   };
 
   return (
-    <div className="w-full flex flex-col mt-6">
+    <div className="w-full flex flex-col mt-6 ">
       <h2 className="text-lg mb-1">{placeholder}</h2>
       <div className="flex flex-row justify-center items-center">
         <Input

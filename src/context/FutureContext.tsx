@@ -1,22 +1,41 @@
 'use client';
 
 import React, { createContext, useContext, useState } from "react";
-import { InputItem, InputType } from "@/types/interfaces";
+import { InputItem } from "@/types/interfaces";
 import { FutureProviderProps } from "@/types/interfaces";
+import { supabase } from "@/lib/supabase-client";
 
+// Create Context
 const FutureContext = createContext<FutureProviderProps | undefined>(undefined);
 
 export const FutureProvider = ({ children }: { children: React.ReactNode }) => {
   const [inputs, setInputs] = useState<InputItem[]>([]);
 
-  const addInput = async (category: InputType, name: string): Promise<void> => {
-    const newInput: InputItem = {
-      id: Math.random().toString(),
-      user_id: "MockUserId",
-      category,
-      name,
-    };
-    setInputs((prev) => [...prev, newInput]);
+  const addInput = async (category: string, name: string) => {
+    try {
+      // Insert the new input into Supabase
+      const { error } = await supabase.from("future_inputs").insert({
+        category,
+        name,
+      });
+
+      if (error) {
+        console.error("Error inserting input into Supabase:", error.message);
+        return;
+      }
+
+      console.log("Input added successfully!");
+
+      // Update local state
+      const newInput: InputItem = {
+        id: Math.random().toString(), // Generate a random ID for local state
+        category,
+        name,
+      };
+      setInputs((prev) => [...prev, newInput]);
+    } catch (err) {
+      console.error("Unexpected error in addInput:", err);
+    }
   };
 
   return (
@@ -26,9 +45,80 @@ export const FutureProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// Custom Hook to Use Context
 export const useFuture = () => {
   const context = useContext(FutureContext);
-  if (!context) throw new Error("useFuture must be used within a FutureProvider");
+  if (!context) {
+    throw new Error("useFuture must be used within a FutureProvider");
+  }
   return context;
 };
 
+
+
+/*'use client';
+
+import React, { createContext, useContext, useState } from "react";
+import { InputItem, InputType } from "@/types/interfaces";
+import { FutureProviderProps } from "@/types/interfaces";
+import { supabase } from "@/lib/supabase-client";
+
+const FutureContext = createContext<FutureProviderProps | undefined>(undefined);
+
+export const FutureProvider = ({ children }: { children: React.ReactNode }) => {
+  const [inputs, setInputs] = useState<InputItem[]>([]);
+
+  const addInput = async (category: string, name: string) => {
+    try {
+
+      // Fetch the authenticated user's session
+     // const { data: session, error: sessionError } = await supabase.auth.getSession();
+     // if (sessionError || !session?.session?.user?.id) {
+       // console.error("User is not authenticated:", sessionError?.message || "No session found.");
+        //return;
+      //}
+
+      //const userId = session.session.user.id;
+
+      // Insert the new input into the Supabase table
+      const { error } = await supabase.from("future_inputs").insert({
+        category,
+        name,
+       // user_id: userId, // Ensure user_id is being properly set
+      });
+
+      if (error) {
+        console.error("Error inserting input into Supabase:", error.message);
+        return;
+      }
+
+      console.log("Input added successfully!");
+
+      // Update local state
+      const newInput: InputItem = {
+        id: Math.random().toString(), // Generate a random ID for local state
+       // user_id: userId,
+        category,
+        name,
+      };
+      setInputs((prev) => [...prev, newInput]);
+    } catch (err) {
+      console.error("Unexpected error in addInput:", err);
+    }
+  };
+
+  return (
+    <FutureContext.Provider value={{ inputs, addInput }}>
+      {children}
+    </FutureContext.Provider>
+  );
+};
+
+// Custom Hook to Use Context
+export const useFuture = () => {
+  const context = useContext(FutureContext);
+  if (!context) {
+    throw new Error("useFuture must be used within a FutureProvider");
+  }
+  return context;
+};*/

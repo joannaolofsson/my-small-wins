@@ -10,4 +10,4 @@ export const iconMap: Record<string, IconType> = {
   FaGift: require("react-icons/fa").FaGift,
   FaEdit: require("react-icons/fa").FaEdit,
   FaPencilAlt: require("react-icons/fa").FaPencilAlt,
-};
+

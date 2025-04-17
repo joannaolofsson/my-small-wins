@@ -2,8 +2,8 @@ import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { Database } from '@/types/supabase';
 
-export default function createClient() {
-  const cookieStore = cookies(); // No need to await, as cookies() is synchronous
+export default async function createClient() {
+  const cookieStore = await cookies(); // ✅ called inside function
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
