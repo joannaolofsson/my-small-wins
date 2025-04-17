@@ -29,9 +29,11 @@ const messagesByType = {
     const type = searchParams.get("type") as keyof typeof iconsByType;
   
     const icons = iconsByType[type] || iconsByType.habit;
-    const messages = messagesByType[type] || messagesByType.habit;
-  
+
+    console.log(icons)
     const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+
+    const messages = messagesByType[type] || messagesByType.habit;
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
   
     return NextResponse.json({
@@ -39,3 +41,19 @@ const messagesByType = {
       encouragement: randomMessage,
     });
   }
+
+  //function getRandomItem(arr) {
+
+    // get random index value
+    //const randomIndex = Math.floor(Math.random() * arr.length);
+
+    // get random item
+    //const item = arr[randomIndex];
+
+    //return item;
+//}
+
+//const array = [1, 'hello', 5, 8];
+
+//const result = getRandomItem(array);
+//console.log(result)
