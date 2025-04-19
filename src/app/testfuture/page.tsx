@@ -1,11 +1,9 @@
-'use server';
-
-import createClient from '@/utils/server';
+import { supabase } from '@/lib/supabase-client';
 import FutureselfClient from './futureselfclient';
 import { FutureProvider } from '@/context/FutureContext';
 
 export default async function FutureselfPage() {
-  const supabase = await createClient();
+
 
   // Get the currently signed-in user/session
   const {

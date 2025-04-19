@@ -1,6 +1,7 @@
-"use client";
-import React, { useState } from "react";
-import { signOut } from "../../actions/auth";
+'use client';
+
+import { useState } from "react";
+import { supabase } from "@/lib/supabase-client";
 
 const Logout = () => {
   const [loading, setLoading] = useState(false);
@@ -8,20 +9,29 @@ const Logout = () => {
   const handleLogout = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    await signOut();
 
-    setLoading(false);
+    try {
+      await supabase.auth.signOut();
+      // Optionally handle any additional logic post-signout here (like redirecting)
+    } catch (error) {
+      console.error("Error during sign out:", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <>
-      <form onSubmit={handleLogout}>
-        <button type="submit" disabled={loading} className="bg-[#469A90] text-white text-sm px-4 py-2 rounded-lg cursor-pointer">
-          {loading ? "Signing out..." : "Sign out"}
-        </button>
-      </form>
-    </>
+    <form onSubmit={handleLogout}>
+      <button
+        type="submit"
+        disabled={loading}
+        className="bg-[#469A90] text-white text-sm px-4 py-2 rounded-lg cursor-pointer"
+      >
+        {loading ? "Signing out..." : "Sign out"}
+      </button>
+    </form>
   );
 };
 
 export default Logout;
+

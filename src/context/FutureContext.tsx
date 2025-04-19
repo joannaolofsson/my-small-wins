@@ -14,8 +14,10 @@ export const FutureProvider = ({ children, initialInputs }: FutureProviderProps)
     const { error } = await supabase.from("future_inputs").insert({
       category,
       name,
-      user_id,
+      user_id: 'dev-user-id',
     });
+
+
 
     if (!error) {
       const newInput: InputItem = {
