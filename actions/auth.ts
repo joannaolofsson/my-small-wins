@@ -53,6 +53,6 @@ export async function signOut() {
     if (error) redirect("/error");
   
     revalidatePath("/", "layout");
-    redirect("/login");
+    redirect("/");
   }
 

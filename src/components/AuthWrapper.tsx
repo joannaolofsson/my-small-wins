@@ -15,31 +15,32 @@ export default function AppWrapper() {
     };
     fetchSession();
 
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session);
-      }) as { data: { subscription: { unsubscribe: () => void } } };
-    
-      return () => subscription.unsubscribe(); 
-    }, []);
-    
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    }) as { data: { subscription: { unsubscribe: () => void } } };
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setSession(null);
   };
 
- return (
-  <main className="p-4">
-    {session ? (
-      <div>
-        <p>Logged in as {session.user.email}</p>
-        <Button onClick={handleLogout} className="bg-red-500 text-white p-2 rounded">
-          Log out
-        </Button>
-      </div>
-    ) : (
-
-      <AuthForm />
-    )}
-  </main>
-)};
+  return (
+    <main className="p-4">
+      {session ? (
+        <div>
+          <p>Logged in as {session.user.email}</p>
+          <Button onClick={handleLogout} className="bg-red-500 text-white p-2 rounded">
+            Log out
+          </Button>
+        </div>
+      ) : (
+        <AuthForm />
+      )}
+    </main>
+  );
+}

@@ -10,51 +10,51 @@ export default function Header() {
 
   useEffect(() => {
     const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
+      const { data, error } = await supabase.auth.getUser();
+      if (!error) setUser(data.user);
     };
 
     getUser();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      authListener?.subscription?.unsubscribe();
+    };
   }, []);
 
   return (
-    <nav className="flex-nowrap relative flex w-full items-center bg-white/30 p-6 rounded-xl border border-white/20 backdrop-blur-md">
-      <div className="flex w-full items-center justify-evenly">
-        <Link className="font-semibold" href="/">
-          Home
-        </Link>
-        <Link href="/futureself" className="font-semibold">Future Self</Link>
-        <Link href="/smallwins" className="font-semibold">Small Wins</Link>
+    <nav className="flex items-center justify-between w-full px-6 py-4 bg-white/30 border border-white/20 backdrop-blur-md rounded-xl shadow-sm">
+      <div className="flex gap-6 items-center">
+        <Link href="/" className="font-semibold hover:underline">Home</Link>
+        <Link href="/futureself" className="font-semibold hover:underline">Future Self</Link>
+        <Link href="/smallwins" className="font-semibold hover:underline">Small Wins</Link>
+      </div>
 
-        <div className="flex items-center gap-x-5">
-          {!user ? (
+      <div className="flex items-center gap-4">
+        {!user ? (
+          <>
             <Link href="/login">
-              <div className="bg-[#C9A7D9] text-white text-sm font-semibold px-4 py-2 rounded-sm">
+              <div className="bg-[#C9A7D9] text-white text-sm font-semibold px-4 py-2 rounded hover:opacity-90 transition">
                 Login
               </div>
             </Link>
-          ) : (
-            <>
-              <div className="flex items-center gap-x-2 text-sm">
-                {user?.email}
+            <Link href="/signup">
+              <div className="bg-[#5AA9A3] text-white text-sm font-semibold px-4 py-2 rounded hover:opacity-90 transition">
+                Sign Up
               </div>
-              <Logout />
-            </>
-          )}
-          <Link href="/signup" className="bg-[#5AA9A3] text-white text-sm font-semibold px-4 py-2 rounded-sm">
-            Sign Up
-          </Link>
-        </div>
+            </Link>
+          </>
+        ) : (
+          <>
+            <div className="text-sm font-medium text-gray-700">{user.email}</div>
+            <Logout />
+          </>
+        )}
       </div>
     </nav>
   );
