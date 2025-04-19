@@ -5,34 +5,29 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { FutureSectionProps } from "@/types/interfaces";
 
-
-export const FutureInputSection = ({ type, placeholder, onAdd }: FutureSectionProps) => {
+export const FutureInputSection = ({
+  type,
+  placeholder,
+  onAdd,
+}: FutureSectionProps) => {
   const [value, setValue] = useState("");
 
   const handleAdd = () => {
-    if (!value.trim()) return;
-    onAdd(type, value.trim());
+    if (value.trim() === "") return;
+    onAdd(type, value);
     setValue("");
   };
 
   return (
-    <div className="w-full flex flex-col mt-6 ">
-      <h2 className="text-lg mb-1">{placeholder}</h2>
-      <div className="flex flex-row justify-center items-center">
-        <Input
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder={`Enter a ${type.toLowerCase()}`}
-          className="inline-block border border-[#D1D5DB] rounded-lg py-4 px-6 mr-2 bg-[#F8F9FA]"
-        />
-
-        <Button onClick={handleAdd} variant="default">
-          Add
-          <span className="hidden"> {type}</span>
-        </Button>
-
-      </div>
+    <div className="flex items-center gap-2 my-2">
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={placeholder}
+      />
+      <Button onClick={handleAdd}>Add</Button>
     </div>
   );
 };
+
+

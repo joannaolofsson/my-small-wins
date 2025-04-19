@@ -5,36 +5,27 @@ import { InputItem } from "@/types/interfaces";
 import { FutureProviderProps } from "@/types/interfaces";
 import { supabase } from "@/lib/supabase-client";
 
-// Create Context
 const FutureContext = createContext<FutureProviderProps | undefined>(undefined);
 
-export const FutureProvider = ({ children }: { children: React.ReactNode }) => {
-  const [inputs, setInputs] = useState<InputItem[]>([]);
+export const FutureProvider = ({ children, initialInputs }: FutureProviderProps) => {
+  const [inputs, setInputs] = useState<InputItem[]>(initialInputs || []);
 
-  const addInput = async (category: string, name: string) => {
-    try {
-      // Insert the new input into Supabase
-      const { error } = await supabase.from("future_inputs").insert({
-        category,
-        name,
-      });
+  const addInput = async (category: string, name: string, user_id: string) => {
+    const { error } = await supabase.from("future_inputs").insert({
+      category,
+      name,
+      user_id,
+    });
 
-      if (error) {
-        console.error("Error inserting input into Supabase:", error.message);
-        return;
-      }
-
-      console.log("Input added successfully!");
-
-      // Update local state
+    if (!error) {
       const newInput: InputItem = {
-        id: Math.random().toString(), // Generate a random ID for local state
+        id: crypto.randomUUID(),
         category,
         name,
+        user_id,
+        created_at: new Date().toISOString(),
       };
       setInputs((prev) => [...prev, newInput]);
-    } catch (err) {
-      console.error("Unexpected error in addInput:", err);
     }
   };
 
@@ -56,14 +47,7 @@ export const useFuture = () => {
 
 
 
-/*'use client';
-
-import React, { createContext, useContext, useState } from "react";
-import { InputItem, InputType } from "@/types/interfaces";
-import { FutureProviderProps } from "@/types/interfaces";
-import { supabase } from "@/lib/supabase-client";
-
-const FutureContext = createContext<FutureProviderProps | undefined>(undefined);
+/*
 
 export const FutureProvider = ({ children }: { children: React.ReactNode }) => {
   const [inputs, setInputs] = useState<InputItem[]>([]);

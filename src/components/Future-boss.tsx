@@ -62,7 +62,7 @@ export function Futuremanager({ session }: Props) {
     if (error) {
       console.error('Error deleting row:', error.message);
     } else {
-      fetchFutureInputs(); // Refresh the list
+      fetchFutureInputs(); 
     }
   };
 
@@ -75,8 +75,8 @@ export function Futuremanager({ session }: Props) {
     if (error) {
       console.error('Error updating row:', error.message);
     } else {
-      fetchFutureInputs(); // Refresh the list
-      setNewName(''); // Reset input field
+      fetchFutureInputs(); 
+      setNewName(''); 
     }
   };
 
