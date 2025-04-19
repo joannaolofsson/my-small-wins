@@ -1,40 +1,34 @@
-'use server';
+// app/futureself/page.tsx
 
-import createClient from '@/utils/server';
+import { supabase } from '@/lib/supabase-client';
 import FutureselfClient from './futureselfclient';
-import { FutureProvider } from '@/context/FutureContext';
 
 export default async function FutureselfPage() {
-  const supabase = await createClient();
-
-  // Get the currently signed-in user/session
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  //const userId = session?.user?.id;
-  // Temporary so I can work
-  const userId = session?.user?.id || 'dev-user-id'; 
+  const userId = session?.user?.id || 'dev-user-id';
+  const username = session?.user?.user_metadata?.username || session?.user?.email;
 
   if (!userId) {
-    // Optional: redirect or return a message
-    return <p>You must be signed in to view this page.</p>;
+    return (
+      <div className="p-10 text-center text-red-600">
+        You must be signed in to view this page.
+      </div>
+    );
   }
 
-  // Fetch existing inputs for that user
   const { data: initialInputs = [] } = await supabase
     .from("future_inputs")
     .select("*")
     .eq("user_id", userId);
 
   return (
-    <FutureProvider initialInputs={initialInputs}>
-      <FutureselfClient
-        username={session.user.user_metadata?.username || session.user.email}
-        userId={userId}
-        initialInputs={initialInputs}
-      />
-    </FutureProvider>
+    <FutureselfClient
+      username={username}
+      userId={userId}
+      initialInputs={initialInputs}
+    />
   );
 }
-
