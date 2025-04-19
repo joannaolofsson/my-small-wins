@@ -1,48 +1,35 @@
-'use client'
+'use client';
 
-import { useWin } from "@/context/WinContext";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PiCaretLeft } from "react-icons/pi";
 import { SmallWinFormSection } from "@/components/SmallWinFormSection";
-import SmallWinCard from "@/components/SmallWinCard";
+import SmallWinBooster from "@/components/SmallWinBooster";
+import { useWin, WinProvider } from "@/context/WinContext";
 
-
-export default function SmallWins() {
-  const { wins } = useWin(); 
-
+export default function SmallWinsPage() {
   const searchParams = useSearchParams();
   const selectedId = searchParams.get("id");
+  const { clearAllWins } = useWin();
 
   return (
+    <>
+    <WinProvider>
     <div className="flex flex-col mx-auto w-lg mt-10">
- 
-      <div>
-        <Button asChild variant="none">
-          <Link href="/"><PiCaretLeft /> Tillbaka</Link>
-        </Button>
-      </div>
+      <Button asChild variant="none">
+        <Link href="/"><PiCaretLeft /> Tillbaka</Link>
+      </Button>
 
-      <div className="text-2xl mb-4">
-        <h2>Small Wins</h2>
-      </div>
-
+      <h2 className="text-2xl my-4">Small Wins</h2>
 
       <SmallWinFormSection selectedId={selectedId} />
-
-  
-      <div className="mt-4">
-        {wins.length > 0 ? (
-          <div>
-            {wins.map((win) => (
-              <SmallWinCard key={win.uniqueKey} item={win} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500">No wins yet. Start by adding one!</p>
-        )}
-      </div>
+      <SmallWinBooster />
+      <Button onClick={clearAllWins} variant="destructive" className="my-4 w-fit">
+  Clear All
+</Button>
     </div>
+    </WinProvider>
+    </>
   );
-};
+}
