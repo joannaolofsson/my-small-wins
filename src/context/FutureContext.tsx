@@ -1,82 +1,65 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { InputItem } from "@/types/interfaces";
-import { FutureContextProps } from "@/types/interfaces";
 import { supabase } from "@/lib/supabase-client";
-
+import { FutureContextProps } from "@/types/interfaces";
 
 const FutureContext = createContext<FutureContextProps | undefined>(undefined);
 
-export const FutureProvider = ({ children }: { children: React.ReactNode }) => {
-  const [inputs, setInputs] = useState<InputItem[]>([]);
+export function FutureProvider({ children }: { children: React.ReactNode }) {
+  const [inputFuture, setInputFuture] = useState<any[]>([]); // Renamed from `inputs`
 
   const fetchInputs = async () => {
-    const { data, error } = await supabase.from("future_inputs").select("*");
+    const { data, error } = await supabase
+      .from("futureself") // Ensure the table name matches your database
+      .select("*");
 
     if (error) {
-      console.error("Error fetching inputs:", error.message);
+      console.error("Error fetching Future Self inputs:", error.message);
       return;
     }
 
-    setInputs(data || []);
+    setInputFuture(data || []);
   };
 
   const addInput = async (category: string, name: string) => {
-    const { data: sessionData } = await supabase.auth.getSession();
-    const userId = sessionData?.session?.user?.id;
+    const { error } = await supabase
+      .from("futureself")
+      .insert([{ category, name, created_at: new Date().toISOString() }]);
 
-    if (!userId) {
-      console.error("User is not authenticated");
+    if (error) {
+      console.error("Error adding input:", error.message);
       return;
     }
 
-    const { error } = await supabase
-      .from("future_inputs")
-      .insert({ category, name, user_id: userId });
-
-    if (!error) {
-      const newInput: InputItem = {
-        id: crypto.randomUUID(),
-        user_id: userId,
-        category,
-        name,
-        created_at: new Date().toISOString(),
-      };
-      setInputs((prev) => [...prev, newInput]);
-    } else {
-      console.error("Error adding input:", error.message);
-    }
+    fetchInputs(); // Refresh inputs after adding
   };
 
   const deleteInput = async (id: string) => {
     const { error } = await supabase
-      .from("future_inputs")
+      .from("futureself")
       .delete()
-      .match({ id });
+      .eq("id", id);
 
-    if (!error) {
-      setInputs((prev) => prev.filter((input) => input.id !== id)); // Remove input locally
-    } else {
+    if (error) {
       console.error("Error deleting input:", error.message);
+      return;
     }
+
+    fetchInputs(); // Refresh inputs after deleting
   };
 
-  useEffect(() => {
-    fetchInputs();
-  }, []);
-
   return (
-    <FutureContext.Provider value={{ inputs, addInput, deleteInput, fetchInputs }}>
+    <FutureContext.Provider value={{ inputFuture, fetchInputs, addInput, deleteInput }}>
       {children}
     </FutureContext.Provider>
   );
-};
+}
 
-export const useFuture = () => {
+export function useFuture() {
   const context = useContext(FutureContext);
   if (!context) {
     throw new Error("useFuture must be used within a FutureProvider");
   }
   return context;
-};
+}

@@ -28,11 +28,13 @@ export interface InputProps {
 }
 
 export interface FutureContextProps {
-  inputs: InputItem[];
+  inputFuture: any[]; // Changed from `inputs` to `inputFuture`
+  fetchInputs: () => Promise<void>;
   addInput: (category: string, name: string) => Promise<void>;
   deleteInput: (id: string) => Promise<void>;
-  fetchInputs: () => Promise<void>;
 }
+
+
 
 
 // Smallwin
@@ -43,7 +45,9 @@ export type SmallWinCategory = "habit" | "accomplishment" | "gift" | "manual";
 export type WinFormValues = {
   message: string;
   emotion: string;
+  category: SmallWinCategory; // Include category in form values
 };
+
 
 //export interface SmallWinItem {
   //uniqueKey: string;
@@ -56,14 +60,17 @@ export type WinFormValues = {
 
 export interface WinInput {
   id: string;
-  inputId: string;
+  inputFuture: string;
   message: string;
   icon: string;
   encouragement: string;
   color: string;
+  category: SmallWinCategory; // Mandatory field
   emotion?: string;
-  category?: SmallWinCategory;
 }
+
+
+
 
 //export interface icons {
     //habit: string[];
@@ -95,4 +102,3 @@ export interface BoosterProp {
   limit: number;
 }
 
-// Optional mapping for icons and categories
