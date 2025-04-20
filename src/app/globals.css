@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@tailwind utilities;
 
 
 
@@ -111,5 +112,39 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
+
+/*Gradients for small win cards */
+
+@layer utilities {
+  .bg-gradient-to-r-from-bronze-to-gold {
+    background: linear-gradient(to right, #CD7F32, #C0C0C0, #FFD700);
+  }
+
+  .border-gradient-to-r-from-bronze-to-gold {
+    border: solid 4px;
+    border-image: linear-gradient(to right, #CD7F32, #C0C0C0, #FFD700) 1;
+  }
+}
+
+/* Checkmark */
+
+@layer utilities {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out;
+  }
+}
+
 
 

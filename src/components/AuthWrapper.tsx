@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase-client';
 import AuthForm from '@/components/AuthForm';
 import { Button } from './ui/button';
+import Summary from './Summery';
 
 export default function AppWrapper() {
   const [session, setSession] = useState<any>(null);
@@ -32,11 +33,16 @@ export default function AppWrapper() {
   return (
     <main className="p-4">
       {session ? (
-        <div>
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-row items-center justify-end'>
           <p>Logged in as {session.user.email}</p>
-          <Button onClick={handleLogout} className="bg-red-500 text-white p-2 rounded">
+          <Button onClick={handleLogout} variant="none">
             Log out
           </Button>
+          </div>
+
+          {/* Summary Dashboard */}
+          <Summary />
         </div>
       ) : (
         <AuthForm />

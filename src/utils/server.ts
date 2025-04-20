@@ -1,4 +1,4 @@
-/*import { createServerClient } from '@supabase/ssr';
+import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { Database } from '@/types/supabase';
 
@@ -19,10 +19,9 @@ export default async function createClient() {
               cookieStore.set(name, value, options)
             );
           } catch {
-            // Ignore errors in setAll, especially in server components
           }
         },
       },
     }
   );
-}*/
+}
