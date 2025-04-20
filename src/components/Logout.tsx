@@ -14,7 +14,7 @@ const Logout = () => {
       await supabase.auth.signOut();
       // Optionally handle any additional logic post-signout here (like redirecting)
     } catch (error) {
-      console.error("Error during sign out:", error.message);
+      console.error("Error during sign out:", error);
     } finally {
       setLoading(false);
     }

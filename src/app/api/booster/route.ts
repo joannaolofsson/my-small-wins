@@ -8,22 +8,23 @@ export async function GET(request: Request) {
     {
       icon: "FaSeedling",
       encouragement: "You're just getting started!",
-      color: "border-blue-400",
+      color: "slate-500", 
     },
     {
       icon: "FaFire",
       encouragement: "You're on fire!",
-      color: "border-red-400",
+      color: "slate-500",
     },
     {
       icon: "FaCrown",
-      encouragement: "Royal win vibes 👑",
-      color: "border-yellow-400",
+      encouragement: "Royal win vibes",
+      color: "slate-500",
     },
   ];
 
   const index = count % dataByCount.length;
   const booster = dataByCount[index];
+  console.log("Returning booster:", booster);
 
   return NextResponse.json(booster);
 }

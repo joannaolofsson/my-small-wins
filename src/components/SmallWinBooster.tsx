@@ -1,40 +1,42 @@
-'use client';
-
-import { useWin } from "@/context/WinContext";
+import { Badge } from "@/components/ui/badge";
 import { FaSeedling, FaFire, FaCrown } from "react-icons/fa";
+import { Card } from "./ui/card";
+import { useWin } from "@/context/WinContext";
+import { BoosterProp } from "@/types/interfaces";
 
-const iconMap: Record<string, JSX.Element> = {
-  FaSeedling: <FaSeedling className="text-green-500" />,
-  FaFire: <FaFire className="text-red-500" />,
-  FaCrown: <FaCrown className="text-yellow-500" />,
+const iconMap: Record<string, React.ReactNode> = {
+  FaSeedling: <FaSeedling className="text-slate-500" />,
+  FaFire: <FaFire className="text-slate-500" />,
+  FaCrown: <FaCrown className="text-slate-500" />,
 };
 
-export default function SmallWinBooster() {
+
+export default function SmallWinBooster({ limit }: BoosterProp) {
   const { smallWins } = useWin();
 
-  if (!smallWins || smallWins.length === 0) {
-    return <p className="text-gray-500">No wins yet. Start by adding one!</p>;
+  const displayedWins = limit ? smallWins.slice(0, limit) : smallWins;
+
+  if (!displayedWins || displayedWins.length === 0) {
+    return <p className="text-gray-500 italic">No wins yet. Start by adding one!</p>;
   }
 
   return (
-    <div className="w-lg bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-4 flex flex-col gap-4 p-6">
-      {smallWins.map((win) => {
-        console.log("Rendering win:", win);
-        const icon = iconMap[win.icon] ?? <FaSeedling className="text-gray-400" />;
-
+    <div className="flex flex-col gap-2 w-full">
+      {displayedWins.map((win) => {
+        const icon = iconMap[win.icon] || <FaSeedling className="text-slate-500" />;
         return (
-          <div
+          <Card
             key={win.inputId}
-            className={`border-b pb-4 px-4 rounded-lg ${win.color} border-2`}
+            className="relative bg-white/20 rounded-xl shadow-lg border border-gray-200 flex flex-row items-center py-0"
           >
-            <div className="flex items-center gap-3">
-              <div className="text-2xl">{icon}</div>
-              <p className="font-bold text-lg">{win.message}</p>
-            </div>
-            <p className="text-sm text-gray-700 italic mt-1">
-              {win.encouragement}
-            </p>
-          </div>
+            <Badge className="relative w-16 h-16 rounded-lg flex items-center justify-center bg-gradient-to-r from-bronze via-silver to-gold px-[2px]">
+              <div className="w-full h-full bg-gray-50 rounded-lg flex items-center justify-center">
+                {icon}
+              </div>
+            </Badge>
+            <p className="font-regular text-sm text-[#333333] truncate">{win.message}</p>
+            <p className="text-medium text-gray-700 truncate">{win.encouragement}</p>
+          </Card>
         );
       })}
     </div>
