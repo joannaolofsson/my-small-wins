@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { supabase } from "@/lib/supabase-client";
 import { FutureContextProps } from "@/types/interfaces";
 
@@ -11,9 +11,11 @@ export function FutureProvider({ children }: { children: React.ReactNode }) {
 
   const fetchInputs = async () => {
     const { data, error } = await supabase
-      .from("futureself") // Ensure the table name matches your database
+      .from("future_inputs")
       .select("*");
-
+  
+      console.log("Raw data:", data, error);
+      
     if (error) {
       console.error("Error fetching Future Self inputs:", error.message);
       return;
@@ -23,21 +25,37 @@ export function FutureProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addInput = async (category: string, name: string) => {
-    const { error } = await supabase
-      .from("futureself")
-      .insert([{ category, name, created_at: new Date().toISOString() }]);
+    console.log("🧪 addInput called with:", { category, name });
+    const {data: userData} = await supabase.auth.getUser();
+    const user = userData?.user;
+
+    console.log("👤 Current user:", user);
+
+    if(!user) {
+      console.error("No user found.");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("future_inputs")
+      .insert([{ category, name, user_id: user.id, created_at: new Date().toISOString() }
+        
+      ]);
+      console.log("📤 Insert result:", { data, error });
 
     if (error) {
       console.error("Error adding input:", error.message);
       return;
     }
 
+    console.log("Insert result:", userData, error);
+
     fetchInputs(); // Refresh inputs after adding
   };
 
   const deleteInput = async (id: string) => {
     const { error } = await supabase
-      .from("futureself")
+      .from("future_inputs")
       .delete()
       .eq("id", id);
 

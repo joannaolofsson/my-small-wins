@@ -1,13 +1,14 @@
 import { supabase } from "@/lib/supabase-client";
-import { FutureInput } from "@/types/interfaces";
+
 
 // Fetch data from the future_inputs table
-export async function fetchFutureInputs() {
+export async function fetchFutureInputs(userId: string) {
   try {
     const { data, error } = await supabase
       .from("future_inputs")
       .select("*")
-      .order("created_at", { ascending: false }); // Default to ordering by recency
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
     if (error) {
       console.error(`Error fetching data from future_inputs:`, error.message);
@@ -20,6 +21,7 @@ export async function fetchFutureInputs() {
     return [];
   }
 }
+
 
 // Add data to the future_inputs table
 export async function addFutureInput(userId: string, category: string, name: string) {
