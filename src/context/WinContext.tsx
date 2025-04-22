@@ -33,6 +33,7 @@ export const WinProvider = ({ children }: { children: React.ReactNode }) => {
         },
       ]);
 
+
     if (error) {
       console.error("Error adding Small Win:", error.message);
       return;
