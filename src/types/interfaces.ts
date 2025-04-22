@@ -35,8 +35,6 @@ export interface FutureContextProps {
 }
 
 
-
-
 // Smallwin
 
 // Smallwin / types
@@ -46,6 +44,7 @@ export type WinFormValues = {
   message: string;
   emotion: string;
   category: SmallWinCategory; // Include category in form values
+  input_future: string;
 };
 
 

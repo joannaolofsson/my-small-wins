@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase-client";
@@ -22,7 +22,15 @@ export const WinProvider = ({ children }: { children: React.ReactNode }) => {
     const { error } = await supabase
       .from("smallwins")
       .insert([
-        { ...win, created_at: new Date().toISOString() }
+        {
+          input_future: win.inputFuture,
+          message: win.message,
+          icon: win.icon,
+          encouragement: win.encouragement,
+          created_at: new Date().toISOString(),
+          emotion: win.emotion,
+          color: win.color || "default-color",
+        },
       ]);
 
     if (error) {
@@ -30,7 +38,7 @@ export const WinProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    loadWins(); // Refresh wins after adding
+    loadWins(); // Refresh wins after successful insert
   };
 
   useEffect(() => {

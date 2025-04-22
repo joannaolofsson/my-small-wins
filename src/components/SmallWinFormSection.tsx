@@ -7,10 +7,10 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { WinFormValues } from "@/types/interfaces";
-import { randomUUID } from "crypto";
 
-export const SmallWinFormSection = () => {
-  const { createWin } = useWin(); // Access `WinContext`
+
+export const SmallWinFormSection = ({ selectedId }: { selectedId?: string }) => {
+  const { createWin } = useWin();
   const { register, handleSubmit, reset } = useForm<WinFormValues>();
   const [clickCount, setClickCount] = useState(0);
 
@@ -19,7 +19,6 @@ export const SmallWinFormSection = () => {
     setClickCount(currentCount);
 
     try {
-      // Fetch booster API for additional values (icon, encouragement, color)
       const res = await fetch(`/api/booster?count=${currentCount}`);
       let icon = "✨";
       let encouragement = "You got this!";
@@ -30,32 +29,24 @@ export const SmallWinFormSection = () => {
         icon = apiData.icon || icon;
         encouragement = apiData.encouragement || encouragement;
         color = apiData.color || color;
-      } else {
-        console.error("Booster fetch failed:", res.status);
       }
 
-      // Submit the small win
       await createWin({
-        inputFuture: crypto.randomUUID(), // Generates a valid UUID
+        inputFuture: selectedId ?? crypto.randomUUID(), // use route param if available
         message: data.message,
-        icon: "🎉",
-        encouragement: "Great job!",
-        color: "blue",
+        icon,
+        encouragement,
+        color,
         emotion: data.emotion,
         category: "manual",
       });
-      
-      
-      
-      
-      
-      
 
-      reset(); // Reset the form
+      reset();
     } catch (err) {
       console.error("Error handling form submission:", err);
     }
   };
+
 
   return (
     <form
