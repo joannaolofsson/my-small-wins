@@ -41,7 +41,6 @@ export async function fetchSmallWinsByUser(userId: string): Promise<WinInput[]> 
   }
 }
 
-
 export async function addSmallWin(input: Omit<WinInput, "id">): Promise<boolean> {
   try {
     const { error } = await supabase
@@ -70,13 +69,6 @@ export async function addSmallWin(input: Omit<WinInput, "id">): Promise<boolean>
   }
 }
 
-
-
-
-
-
-  
-  
 
 export async function deleteSmallWin(id: string): Promise<boolean> {
   try {

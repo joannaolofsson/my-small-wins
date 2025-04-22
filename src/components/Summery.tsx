@@ -1,5 +1,4 @@
 'use client';
-
 import React from "react";
 import { useFuture } from "@/context/FutureContext"; // Fetch Future Self goals
 import { useWin } from "@/context/WinContext"; // Fetch Small Wins
@@ -18,7 +17,7 @@ export default function Summary() {
         <SmallWinBooster limit={5} />
         <p>Total Small Wins: {wins.length}</p> {/* Display count of wins */}
         <div className="mt-4 text-center">
-          <Link href="/smallwins">
+          <Link href="/smallwins/manual">
             <Button variant="default">Go to Small Wins</Button>
           </Link>
         </div>
