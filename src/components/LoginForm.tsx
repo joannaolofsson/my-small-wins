@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import AuthButton from "./AuthButton";
 import { useRouter } from "next/navigation";
 import { login } from "../../actions/auth";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 const LoginForm = () => {
   const [error, setError] = useState<string | null>(null);
@@ -28,24 +30,26 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
-      <div>
-        <label className="block text-sm font-medium text-[#333333]">Email</label>
-        <input
+      <div className="flex flex-col gap-2">
+        <Label className="text-[#333333]">Email</Label>
+        <Input
           type="email"
           name="email"
-          className="mt-1 w-full px-4 p-2 h-10 rounded-md border border-gray-200 bg-white text-sm text-gray-700"
+          className="bg-[#F8F9FA] text-[#333333]"
         />
       </div>
-      <div>
-        <label className="block text-sm font-medium text-[#333333]">Password</label>
-        <input
+      <div className="flex flex-col gap-2">
+        <Label className="text-[#333333]">Password</Label>
+        <Input
           type="password"
           name="password"
-          className="mt-1 w-full px-4 p-2 h-10 rounded-md border border-gray-200 bg-white text-sm text-gray-700"
+          className="bg-[#F8F9FA] text-[#333333]"
         />
       </div>
+      <div className="mt-2 max-w-[120px] self-end">
       <AuthButton type="Login" loading={loading} />
       {error && <p className="text-red-500">{error}</p>}
+      </div>
     </form>
   );
 };

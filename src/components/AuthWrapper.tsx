@@ -33,27 +33,30 @@ const AppWrapper = () => {
     setSession(null); // Clear session state
   };
 
-  // Render content based on session state
   return (
-    <main className="p-4">
+    <>
       {session ? (
-        <div className="flex flex-col gap-4">
+        <div>
           {/* Logged-in view */}
-          <div className="flex flex-row items-center justify-between">
-            <p>Logged in as {session.user.email}</p>
-            <Button onClick={handleLogout} variant="outline">
+          <div className="w-full max-w-6xl text-end px-4 md:px-16 lg:px-24">
+            <p className="hidden"> {session.user.email}</p>
+            <Button onClick={handleLogout} variant="none">
               Log out
             </Button>
           </div>
 
           {/* Render dashboard or main content */}
+          <section className="w-full max-w-4xl mx-auto">
           <Summary />
+          </section>
         </div>
       ) : (
         // Render authentication form if not logged in
+        <section className="w-full">
         <AuthForm />
+        </section>
       )}
-    </main>
+    </>
   );
 };
 
