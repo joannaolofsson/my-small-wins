@@ -11,6 +11,7 @@ const iconMap: Record<string, React.ReactNode> = {
 export default function SmallWinBooster({ limit }: { limit?: number }) {
   const { wins } = useWin();
 
+
   // Limit the number of wins displayed
   const displayedWins = limit ? wins.slice(0, limit) : wins;
 
