@@ -3,6 +3,7 @@ import { Manrope } from "next/font/google";
 import './globals.css'
 import Header from "@/components/Header";
 import { WinProvider } from "@/context/WinContext";
+import { FutureProvider } from "@/context/FutureContext";
 
 
 
@@ -29,9 +30,11 @@ export default function RootLayout({
         <body
         className={`${manropeSans} antialiased bg-gradient-to-br from-[#A8D5BA] to-[#D9F1E5] min-h-screen`}>
           <WinProvider>
+            <FutureProvider>
           <Header />
  
           {children}
+          </FutureProvider>
           </WinProvider>
         </body>
       </html>
