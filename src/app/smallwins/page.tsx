@@ -6,7 +6,7 @@ import Link from "next/link";
 import { PiCaretLeft } from "react-icons/pi";
 import { SmallWinFormSection } from "@/components/SmallWinFormSection";
 import SmallWinBooster from "@/components/SmallWinBooster";
-import { useWin, WinProvider } from "@/context/WinContext";
+import { useWin } from "@/context/WinContext";
 
 export default function SmallWinsPage() {
   const searchParams = useSearchParams();
@@ -15,21 +15,19 @@ export default function SmallWinsPage() {
 
   return (
     <>
-    <WinProvider>
-    <div className="flex flex-col mx-auto w-lg mt-10">
+    <div className="flex flex-col items-start mx-auto w-lg mt-10">
       <Button asChild variant="none">
         <Link href="/"><PiCaretLeft /> Tillbaka</Link>
       </Button>
-
-      <h2 className="text-2xl my-4">Small Wins</h2>
+      <h2 className="text-4xl text-[#333333] py-4 px-4">Small Wins</h2>
+      <p className="px-4 text-[#333333]">Add your small wins to see your accomplisments grow</p>
 
       <SmallWinFormSection selectedId={selectedId} />
-      <SmallWinBooster />
+      <SmallWinBooster limit={10}/>
       <Button onClick={clearAllWins} variant="destructive" className="my-4 w-fit">
-  Clear All
-</Button>
+        Clear All
+      </Button>
     </div>
-    </WinProvider>
     </>
   );
 }

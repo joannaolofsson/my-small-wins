@@ -28,11 +28,11 @@ export default function Header() {
   }, []);
 
   return (
-    <nav className="flex items-center justify-between w-full px-6 py-4 bg-white/30 border border-white/20 backdrop-blur-md rounded-xl shadow-sm">
+    <nav className="flex items-center justify-between w-full px-6 py-4 bg-white/30 border border-white/20 backdrop-blur-md shadow-sm">
       <div className="flex gap-6 items-center">
-        <Link href="/" className="font-semibold hover:underline">Home</Link>
-        <Link href="/futureself" className="font-semibold hover:underline">Future Self</Link>
-        <Link href="/smallwins" className="font-semibold hover:underline">Small Wins</Link>
+        <Link href="/" className="font-medium hover:underline">Home</Link>
+        <Link href="/futureself/habit" className="font-medium hover:underline">Future Self</Link>
+        <Link href="/smallwins" className="font-medium hover:underline">Small Wins</Link>
       </div>
 
       <div className="flex items-center gap-4">
@@ -44,7 +44,7 @@ export default function Header() {
               </div>
             </Link>
             <Link href="/signup">
-              <div className="bg-[#5AA9A3] text-white text-sm font-semibold px-4 py-2 rounded hover:opacity-90 transition">
+              <div className="bg-[#5AA9A3] text-white text-sm font-semibold px-4 py-2 rounded hover:opacity-90 transition py-4">
                 Sign Up
               </div>
             </Link>

@@ -1,110 +1,82 @@
 'use client';
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { InputItem } from "@/types/interfaces";
-import { FutureProviderProps } from "@/types/interfaces";
+import { FutureContextProps } from "@/types/interfaces";
 import { supabase } from "@/lib/supabase-client";
 
-const FutureContext = createContext<FutureProviderProps | undefined>(undefined);
 
-export const FutureProvider = ({ children, initialInputs }: FutureProviderProps) => {
-  const [inputs, setInputs] = useState<InputItem[]>(initialInputs || []);
-
-  const addInput = async (category: string, name: string, user_id: string) => {
-    const { error } = await supabase.from("future_inputs").insert({
-      category,
-      name,
-      user_id: 'dev-user-id',
-    });
-
-
-
-    if (!error) {
-      const newInput: InputItem = {
-        id: crypto.randomUUID(),
-        category,
-        name,
-        user_id,
-        created_at: new Date().toISOString(),
-      };
-      setInputs((prev) => [...prev, newInput]);
-    }
-  };
-
-  return (
-    <FutureContext.Provider value={{ inputs, addInput }}>
-      {children}
-    </FutureContext.Provider>
-  );
-};
-
-// Custom Hook to Use Context
-export const useFuture = () => {
-  const context = useContext(FutureContext);
-  if (!context) {
-    throw new Error("useFuture must be used within a FutureProvider");
-  }
-  return context;
-};
-
-
-
-/*
+const FutureContext = createContext<FutureContextProps | undefined>(undefined);
 
 export const FutureProvider = ({ children }: { children: React.ReactNode }) => {
   const [inputs, setInputs] = useState<InputItem[]>([]);
 
+  const fetchInputs = async () => {
+    const { data, error } = await supabase.from("future_inputs").select("*");
+
+    if (error) {
+      console.error("Error fetching inputs:", error.message);
+      return;
+    }
+
+    setInputs(data || []);
+  };
+
   const addInput = async (category: string, name: string) => {
-    try {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const userId = sessionData?.session?.user?.id;
 
-      // Fetch the authenticated user's session
-     // const { data: session, error: sessionError } = await supabase.auth.getSession();
-     // if (sessionError || !session?.session?.user?.id) {
-       // console.error("User is not authenticated:", sessionError?.message || "No session found.");
-        //return;
-      //}
+    if (!userId) {
+      console.error("User is not authenticated");
+      return;
+    }
 
-      //const userId = session.session.user.id;
+    const { error } = await supabase
+      .from("future_inputs")
+      .insert({ category, name, user_id: userId });
 
-      // Insert the new input into the Supabase table
-      const { error } = await supabase.from("future_inputs").insert({
-        category,
-        name,
-       // user_id: userId, // Ensure user_id is being properly set
-      });
-
-      if (error) {
-        console.error("Error inserting input into Supabase:", error.message);
-        return;
-      }
-
-      console.log("Input added successfully!");
-
-      // Update local state
+    if (!error) {
       const newInput: InputItem = {
-        id: Math.random().toString(), // Generate a random ID for local state
-       // user_id: userId,
+        id: crypto.randomUUID(),
+        user_id: userId,
         category,
         name,
+        created_at: new Date().toISOString(),
       };
       setInputs((prev) => [...prev, newInput]);
-    } catch (err) {
-      console.error("Unexpected error in addInput:", err);
+    } else {
+      console.error("Error adding input:", error.message);
     }
   };
 
+  const deleteInput = async (id: string) => {
+    const { error } = await supabase
+      .from("future_inputs")
+      .delete()
+      .match({ id });
+
+    if (!error) {
+      setInputs((prev) => prev.filter((input) => input.id !== id)); // Remove input locally
+    } else {
+      console.error("Error deleting input:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchInputs();
+  }, []);
+
   return (
-    <FutureContext.Provider value={{ inputs, addInput }}>
+    <FutureContext.Provider value={{ inputs, addInput, deleteInput, fetchInputs }}>
       {children}
     </FutureContext.Provider>
   );
 };
 
-// Custom Hook to Use Context
 export const useFuture = () => {
   const context = useContext(FutureContext);
   if (!context) {
     throw new Error("useFuture must be used within a FutureProvider");
   }
   return context;
-};*/
+};
