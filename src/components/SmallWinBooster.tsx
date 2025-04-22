@@ -7,7 +7,6 @@ const iconMap: Record<string, React.ReactNode> = {
   FaSeedling: <FaSeedling className="text-slate-500" />,
   FaFire: <FaFire className="text-slate-500" />,
   FaCrown: <FaCrown className="text-slate-500" />,
-
 };
 export default function SmallWinBooster({ limit }: { limit?: number }) {
   const { wins } = useWin();

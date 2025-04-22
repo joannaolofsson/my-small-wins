@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import AuthButton from "./AuthButton";
 import { useRouter } from "next/navigation";
 import { signUp } from "../../actions/auth";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 const SignUpForm = () => {
   const [error, setError] = useState<string | null>(null);
@@ -26,52 +28,48 @@ const SignUpForm = () => {
     setLoading(false);
   };
   return (
-
-    <div>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full h-auto">
-        <div>
-          <label className="block text-sm font-medium text-[#333333]">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Label className="text-[#333333]">
             Username
-          </label>
-          <input
+          </Label>
+          <Input
             type="text"
             placeholder="Username"
             id="username"
             name="username"
-            className="mt-1 w-full px-4 p-2  h-10 rounded-md border border-gray-200 bg-white text-sm text-gray-700"
+            className="text-[#333333] bg-[#F8F9FA]"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#333333]">
+        <div className="flex flex-col gap-2">
+          <Label className="text-[#333333]">
             Email
-          </label>
-          <input
+          </Label>
+          <Input
             type="email"
             placeholder="Email"
             id="Email"
             name="email"
-            className="mt-1 w-full px-4 p-2  h-10 rounded-md border border-gray-200 bg-white text-sm text-gray-700"
+            className="text-[#333333] bg-[#F8F9FA]"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#333333]">
+        <div className="flex flex-col gap-2">
+          <Label className="text-[#333333]">
             Password
-          </label>
-          <input
+          </Label>
+          <Input
             type="password"
             placeholder="Password"
             name="password"
             id="password"
-            className="mt-1 w-full px-4 p-2  h-10 rounded-md border border-gray-200 bg-white text-sm text-gray-700"
+            className="text-[#333333] bg-[#F8F9FA]"
           />
         </div>
-        <div className="mt-4">
+        <div className="mt-2 max-w-[120px] self-end">
           <AuthButton type="Sign up" loading={loading} />
         </div>
         {error && <p className="text-red-500">{error}</p>}
       </form>
-    </div>
-
   );
 };
 
