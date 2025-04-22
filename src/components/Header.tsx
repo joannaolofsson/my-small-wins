@@ -32,13 +32,13 @@ export default function Header() {
       <div className="flex gap-6 items-center">
         <Link href="/" className="font-medium hover:underline">Home</Link>
         <Link href="/futureself/habit" className="font-medium hover:underline">Future Self</Link>
-        <Link href="/smallwins" className="font-medium hover:underline">Small Wins</Link>
+        <Link href="/smallwins/manual" className="font-medium hover:underline">Small Wins</Link>
       </div>
 
       <div className="flex items-center gap-4">
         {!user ? (
           <>
-            <Link href="/login">
+            <Link href="/">
               <div className="bg-[#C9A7D9] text-white text-sm font-semibold px-4 py-2 rounded hover:opacity-90 transition">
                 Login
               </div>
