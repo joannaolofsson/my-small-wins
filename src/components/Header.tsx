@@ -44,7 +44,7 @@ export default function Header() {
               </div>
             </Link>
             <Link href="/signup">
-              <div className="bg-[#5AA9A3] text-white text-sm font-semibold px-4 py-2 rounded hover:opacity-90 transition py-4">
+              <div className="bg-[#5AA9A3] text-white text-sm font-semibold px-4 py-2 rounded hover:opacity-90 transition">
                 Sign Up
               </div>
             </Link>
