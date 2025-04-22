@@ -4,9 +4,9 @@ import { FutureProvider } from "@/context/FutureContext";
 export default function Home() {
   return ( 
     <FutureProvider>
-      <div className="flex flex-col items-center mt-10"> 
-        <h1 className="text-6xl font-semibold">Track your small wins</h1>
-        <div className="flex flex-col my-4 gap-2">
+      <div className="min-h-screen mt-8"> 
+        <h1 className="text-4xl md:text-6xl font-semibold text-start md:text-center px-4">Track your small wins</h1>
+        <div className="w-full">
           <AppWrapper />
         </div>
       </div>

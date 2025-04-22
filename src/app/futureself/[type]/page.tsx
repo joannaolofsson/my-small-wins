@@ -36,11 +36,9 @@ export default function FuturePage({ params }: { params: Promise<{ type: string 
   const nextType = getNextType(type || ""); // Get the next type dynamically
 
   return (
-    <div className="flex w-full justify-center h-screen mt-10">
-      <div className="flex flex-col items-start">
-        <div className="w-lg bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-4 flex flex-col gap-6 p-6">
-          <h1 className="text-2xl pb-2">Add a {type}</h1>
-          <p className="text-gray-600">Define your {type} here for your future self.</p>
+    <div className="flex flex-col items-center min-h-screen mt-8">
+      <div className="w-full max-w-4xl flex flex-col justify-center bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-6 gap-2 py-8 px-8 md:px-20">
+          <h2 className="mb-4 text-2xl md:text-4xl text-start text-[#333333]">What {type} do you want for your future self?</h2>
 
           {!submitted ? (
             <div className="flex flex-col gap-4">
@@ -49,30 +47,30 @@ export default function FuturePage({ params }: { params: Promise<{ type: string 
                 placeholder={`Add a ${type?.toLowerCase()}...`}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className="border rounded-lg p-2"
+                className="bg-[#F8F9FA] text-[#333333]"
               />
               <Button
                 onClick={handleSubmit}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                className=""
               >
                 Submit
               </Button>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col items-end gap-2">
               <span className="text-green-500 text-xl">✔️</span>
-              <p className="text-gray-600">{type} submitted successfully!</p>
+              <p className="text-gray-600">{type} success!</p>
 
               {nextType && (
                 <Link href={`/futureself/${nextType}`}>
-                  <Button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4">
-                    Next: {nextType.charAt(0).toUpperCase() + nextType.slice(1)}
+                  <Button variant="default">
+                     {nextType.charAt(0).toUpperCase() + nextType.slice(1)}
                   </Button>
                 </Link>
               )}
               {!nextType && (
                 <Link href="/">
-                <Button className="bg-green-500 text-white px-4 py-2 rounded-lg mt-4">
+                <Button variant="default" className="">
                 Finish
                 </Button>
                 </Link>
@@ -81,6 +79,6 @@ export default function FuturePage({ params }: { params: Promise<{ type: string 
           )}
         </div>
       </div>
-    </div>
+
   );
 }
