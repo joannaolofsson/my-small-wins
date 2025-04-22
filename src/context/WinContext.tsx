@@ -1,89 +1,44 @@
-'use client'
-import { supabase } from '@/lib/supabase-client';
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { WinInput } from '@/types/interfaces';
-import { WinProviderProps } from '@/types/interfaces';
+'use client';
 
-const WinContext = createContext<WinProviderProps | undefined>(undefined);
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase-client";
+import { WinInput } from "@/types/interfaces";
+import { fetchSmallWins } from "@/lib/supabase-smallwinHelpers";
+
+const WinContext = createContext<{
+  wins: WinInput[];
+  createWin: (winData: Omit<WinInput, "id">) => Promise<void>;
+} | undefined>(undefined);
 
 export const WinProvider = ({ children }: { children: React.ReactNode }) => {
-  const [smallWins, setSmallWins] = useState<WinInput[]>([]);
+  const [wins, setWins] = useState<WinInput[]>([]);
 
-  const fetchSmallWins = async () => {
-    const { data, error } = await supabase
-      .from('smallwins')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    console.log('Supabase data:', data);
-
-    if (error) {
-      console.error('Error fetching smallwin inputs:', error.message);
-    } else {
-      const uniqueWins = data.reduce((acc, win) => {
-        if (!acc.some((existingWin: WinInput) => existingWin.inputId === win.input_id)) {
-          acc.push({
-            id: win.id,
-            inputId: win.input_id,
-            message: win.message,
-            icon: win.icon,
-            encouragement: win.encouragement,
-            color: win.color,
-            emotion: win.emotion,
-          });
-        }
-        return acc;
-      }, [] as WinInput[]);
-
-      setSmallWins(uniqueWins);
-    }
+  const loadWins = async () => {
+    const fetchedWins = await fetchSmallWins();
+    setWins(fetchedWins);
   };
 
-  const addWin = async (input: Omit<WinInput, 'id'>) => {
-    const { data: existingWins, error: fetchError } = await supabase
-      .from('smallwins')
-      .select('*')
-      .eq('input_id', input.inputId);
+  const createWin = async (win: Omit<WinInput, "id">) => {
+    const { error } = await supabase
+      .from("smallwins")
+      .insert([
+        { ...win, created_at: new Date().toISOString() }
+      ]);
 
-    if (fetchError) {
-      console.error('Error checking for existing win:', fetchError.message);
+    if (error) {
+      console.error("Error adding Small Win:", error.message);
       return;
     }
 
-    if (existingWins && existingWins.length > 0) {
-      console.warn('Duplicate win detected. Skipping insert.');
-      return;
-    }
-
-    const { error } = await supabase.from('smallwins').insert([
-      {
-        input_id: input.inputId,
-        message: input.message,
-        icon: input.icon,
-        encouragement: input.encouragement,
-        color: input.color,
-        emotion: input.emotion,
-        created_at: new Date().toISOString(),
-      },
-    ]);
-
-    if (error) {
-      console.error('Error inserting win:', error.message);
-    } else {
-      fetchSmallWins();
-    }
-  };
-
-  const clearAllWins = () => {
-    setSmallWins([]); // Clear the small wins
+    loadWins(); // Refresh wins after adding
   };
 
   useEffect(() => {
-    fetchSmallWins();
+    loadWins(); // Fetch all Small Wins on mount
   }, []);
 
   return (
-    <WinContext.Provider value={{ smallWins, addWin, clearAllWins, existingWin: {} as WinInput }}>
+    <WinContext.Provider value={{ wins, createWin }}>
       {children}
     </WinContext.Provider>
   );
@@ -92,9 +47,7 @@ export const WinProvider = ({ children }: { children: React.ReactNode }) => {
 export const useWin = () => {
   const context = useContext(WinContext);
   if (!context) {
-    throw new Error('useWin must be used within a WinProvider');
+    throw new Error("useWin must be used within a WinProvider");
   }
   return context;
 };
-
-

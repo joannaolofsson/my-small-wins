@@ -1,40 +1,39 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router"; // Access dynamic route parameters
+import React, { useState } from "react";
 import { useFuture } from "@/context/FutureContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-export default function FuturePage() {
-  const router = useRouter();
-  const { type } = router.query; // Get the type (habit, accomplishment, gift) from URL
-  const { addInput } = useFuture(); // Access FutureProvider context
-  const [value, setValue] = useState(""); // Input value state
-  const [submitted, setSubmitted] = useState(false); // Track submission state
+export default function FuturePage({ params }: { params: Promise<{ type: string }> }) {
+  const { type } = React.use(params); // Unwrap the Promise
+  const { addInput } = useFuture(); // Access FutureContext
+  const [value, setValue] = useState(""); // Input state
+  const [submitted, setSubmitted] = useState(false); // Submission state
 
-  useEffect(() => {
-    // Wait for router to be ready before accessing the query
-    if (!router.isReady) {
-      return;
-    }
-  }, [router.isReady]);
+  // Helper function to determine the next type in sequence
+  const getNextType = (currentType: string): string | null => {
+    const typeOrder = ["habit", "accomplishment", "gift"];
+    const currentIndex = typeOrder.indexOf(currentType.toLowerCase());
+    return currentIndex !== -1 && currentIndex < typeOrder.length - 1
+      ? typeOrder[currentIndex + 1]
+      : null;
+  };
 
   const handleSubmit = async () => {
-    if (!value.trim() || !type) return;
+    if (!value.trim()) return;
 
     try {
-      await addInput(type as string, value); // Add input via context
+      await addInput(type, value); // Submit input dynamically based on type
       setValue(""); // Clear input field
-      setSubmitted(true); // Mark as submitted
+      setSubmitted(true); // Show confirmation
     } catch (error) {
       console.error("Failed to submit input:", error);
     }
   };
 
-  if (!router.isReady) {
-    return <div>Loading...</div>; // Ensure router is ready before rendering
-  }
+  const nextType = getNextType(type || ""); // Get the next type dynamically
 
   return (
     <div className="flex w-full justify-center h-screen mt-10">
@@ -63,6 +62,21 @@ export default function FuturePage() {
             <div className="flex items-center gap-2">
               <span className="text-green-500 text-xl">✔️</span>
               <p className="text-gray-600">{type} submitted successfully!</p>
+
+              {nextType && (
+                <Link href={`/futureself/${nextType}`}>
+                  <Button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4">
+                    Next: {nextType.charAt(0).toUpperCase() + nextType.slice(1)}
+                  </Button>
+                </Link>
+              )}
+              {!nextType && (
+                <Link href="/">
+                <Button className="bg-green-500 text-white px-4 py-2 rounded-lg mt-4">
+                Finish
+                </Button>
+                </Link>
+                )}
             </div>
           )}
         </div>

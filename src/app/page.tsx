@@ -1,16 +1,16 @@
-
 import AppWrapper from "@/components/AuthWrapper";
+import { FutureProvider } from "@/context/FutureContext";
 
 export default function Home() {
-  
-
-  return (
-    <div className="flex flex-col items-center mt-10"> 
-    <h1 className="text-6xl font-semibold">Track your small wins</h1>
-      <div className="flex flex-col my-4 gap-2">
-      <AppWrapper />
+  return ( 
+    <FutureProvider>
+      <div className="flex flex-col items-center mt-10"> 
+        <h1 className="text-6xl font-semibold">Track your small wins</h1>
+        <div className="flex flex-col my-4 gap-2">
+          <AppWrapper />
+        </div>
       </div>
-    </div>
+    </FutureProvider>
   );
 }
 
