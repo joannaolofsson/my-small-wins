@@ -16,14 +16,12 @@ export default function Home() {
 
 
 // Todo
-// Dashboard - lägg till inputs samt länk till dynamisk smallwins page
-// Make page reponsive
-// Styling
-// Sparas på supabase
+
+
+// Styling login är på ena sidan... 
 // Clean up code
 // Readme
-
-
+// Push
 
 // Ta fram några snygga icons
 // Varför loopar inte iconerna...
