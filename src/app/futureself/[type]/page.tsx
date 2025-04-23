@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { useFuture } from "@/context/FutureContext";
+import { FutureProvider, useFuture } from "@/context/FutureContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -36,6 +36,7 @@ export default function FuturePage({ params }: { params: Promise<{ type: string 
   const nextType = getNextType(type || ""); // Get the next type dynamically
 
   return (
+    <FutureProvider>
     <div className="flex flex-col items-center min-h-screen mt-8">
       <div className="w-full max-w-4xl flex flex-col justify-center bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-6 gap-2 py-8 px-8 md:px-20">
           <h2 className="mb-4 text-2xl md:text-4xl text-start text-[#333333]">What {type} do you want for your future self?</h2>
@@ -79,6 +80,6 @@ export default function FuturePage({ params }: { params: Promise<{ type: string 
           )}
         </div>
       </div>
-
+      </FutureProvider>
   );
 }

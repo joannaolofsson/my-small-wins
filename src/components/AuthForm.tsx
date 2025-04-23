@@ -35,7 +35,7 @@ export default function AuthForm() {
   };
 
   return (
-    <div className="w-full max-w-md flex flex-col justify-center bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-6 gap-2 p-8">
+    <div className="w-full max-w-md mx-auto flex flex-col  bg-white/30 border border-white/20 rounded-xl backdrop-blur-[15px] shadow-lg cursor-pointer my-6 gap-2 p-8">
       <h2 className="mb-4 text-2xl md:text-4xl text-center text-[#333333]">{isSignUp ? 'Sign Up' : 'Login'}</h2>
       {error && <p className="text-red-500">{error}</p>}
       <section>
