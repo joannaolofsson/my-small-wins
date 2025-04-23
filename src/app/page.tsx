@@ -13,19 +13,3 @@ export default function Home() {
     </FutureProvider>
   );
 }
-
-
-// Todo
-// Sparas på supabase
-// Clean up code
-// Readme
-// Push
-
-
-
-// Ta fram några snygga icons
-// Varför loopar inte iconerna...
-// Plan presentation - Måndag
-
-// -- Bonus --
-// Kolla efter fler ställen som jag kan rensa bland types och interfaces

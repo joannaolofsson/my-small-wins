@@ -1,3 +1,5 @@
+// Denna sida används inte utan är standby för att implementera en fungerande login
+
 import LoginForm from "@/components/LoginForm";
 import Link from "next/link";
 

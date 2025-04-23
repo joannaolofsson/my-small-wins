@@ -1,22 +1,17 @@
 'use client';
 
-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PiCaretLeft } from "react-icons/pi";
 import { SmallWinFormSection } from "@/components/SmallWinFormSection";
 import SmallWinBooster from "@/components/SmallWinBooster";
 
-
 interface Props {
   selectedCategory: string;
 }
 
-
 export default function SmallWinsClientPage({ selectedCategory }: Props) {
-  console.log("selectedCategory:", selectedCategory); // ✅ Should now log correctly
-
-
+  console.log("selectedCategory:", selectedCategory);
 
   return (
    

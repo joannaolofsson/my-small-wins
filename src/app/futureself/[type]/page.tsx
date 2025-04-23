@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function FuturePage({ params }: { params: Promise<{ type: string }> }) {
-  const { type } = React.use(params); // Unwrap the Promise
-  const { addInput } = useFuture(); // Access FutureContext
-  const [value, setValue] = useState(""); // Input state
-  const [submitted, setSubmitted] = useState(false); // Submission state
+  const { type } = React.use(params); 
+  const { addInput } = useFuture(); 
+  const [value, setValue] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-  // Helper function to determine the next type in sequence
+
   const getNextType = (currentType: string): string | null => {
     const typeOrder = ["habit", "accomplishment", "gift"];
     const currentIndex = typeOrder.indexOf(currentType.toLowerCase());

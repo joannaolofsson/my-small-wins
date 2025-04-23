@@ -1,3 +1,5 @@
+// Denna sida används inte utan är standby för att implementera en fungerande login
+
 import SignUpForm from "@/components/SignUpForm";
 import Link from "next/link";
 import React from "react";

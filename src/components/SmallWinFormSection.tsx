@@ -8,7 +8,6 @@
   import { Button } from "./ui/button";
   import { WinFormValues } from "@/types/interfaces";
 
-
   export const SmallWinFormSection = ({ selectedId, category }: { selectedId?: string, category?: string }) => {
 
     const { createWin } = useWin();
