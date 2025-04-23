@@ -97,7 +97,25 @@ export interface WinInput {
     existingWin?: WinInput; // Single win for comparison
   }
   
+
+// Encouragements
+
 export interface BoosterProp {
   limit: number;
 }
 
+export type EncouragementCategory = 'habit' | 'accomplishment' | 'gift'
+
+export type Encouragement = {
+  icon: string;
+  encouragement: string;
+  color: string;
+  category: EncouragementCategory;
+}
+
+export type Booster = {
+  encouragement: string;
+  icon: string;
+  color: string;
+  category: string;
+};

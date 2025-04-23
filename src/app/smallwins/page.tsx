@@ -6,12 +6,12 @@ import Link from "next/link";
 import { PiCaretLeft } from "react-icons/pi";
 import { SmallWinFormSection } from "@/components/SmallWinFormSection";
 import SmallWinBooster from "@/components/SmallWinBooster";
-import { useWin } from "@/context/WinContext";
+
 
 export default function SmallWinsPage() {
   const searchParams = useSearchParams();
   const selectedId = searchParams.get("id");
-  const { clearAllWins } = useWin();
+ 
 
   return (
     <>
@@ -24,9 +24,7 @@ export default function SmallWinsPage() {
 
       <SmallWinFormSection selectedId={selectedId} />
       <SmallWinBooster limit={10}/>
-      <Button onClick={clearAllWins} variant="destructive" className="my-4 w-fit">
-        Clear All
-      </Button>
+
     </div>
     </>
   );

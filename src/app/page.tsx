@@ -13,21 +13,3 @@ export default function Home() {
     </FutureProvider>
   );
 }
-
-
-// Todo
-// Dashboard - lägg till inputs samt länk till dynamisk smallwins page
-// Make page reponsive
-// Styling
-// Sparas på supabase
-// Clean up code
-// Readme
-
-
-
-// Ta fram några snygga icons
-// Varför loopar inte iconerna...
-// Plan presentation - Måndag
-
-// -- Bonus --
-// Kolla efter fler ställen som jag kan rensa bland types och interfaces
